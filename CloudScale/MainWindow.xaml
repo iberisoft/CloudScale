@@ -1,0 +1,28 @@
+﻿<Window x:Class="CloudScale.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CloudScale"
+        Title="Cloud Scale" Icon="CloudScale.ico" FontSize="20" SizeToContent="Height" Width="500" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"
+        Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{x:Static local:LocalScale.PortNames}" SelectedItem="{Binding Source={StaticResource Settings}, Path=PortName}"
+                  SelectionChanged="PortNameBox_SelectionChanged" />
+        <local:ScaleControl x:Name="ScaleControl" Grid.Row="1" Grid.Column="0" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource Settings}, Path=ServerHost, Mode=OneWay}" IsReadOnly="True" />
+        <ItemsControl Name="RemoteScalesControl" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:ScaleControl />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
