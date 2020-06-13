@@ -5,6 +5,8 @@
 void setup()
 {
 	Serial.begin(9600);
+	Serial.println();
+
 	setupUss();
 	setupGps();
 }
@@ -14,11 +16,11 @@ void loop()
 	pollGps();
 	if (Serial.available())
 	{
-		read();
+		readCommand();
 	}
 }
 
-void read()
+void readCommand()
 {
 	String command = Serial.readStringUntil('\n');
 	if (command == "ID")
