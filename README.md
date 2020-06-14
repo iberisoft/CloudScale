@@ -21,6 +21,8 @@ connected to the same MQTT broker.
 
 ## Connections
 
+### Arduino
+
 HC-SR04 | Arduino
 --------|--------
 VCC     | 5V
