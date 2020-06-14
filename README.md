@@ -44,6 +44,29 @@ RX  | D4 (TX)
 TX  | D3 (RX)
 GND | GND
 
+### ESP32
+
+HC-SR04 | ESP32
+--------|--------
+VCC     | 5V
+TRIG    | GPIO4
+ECHO    | GPIO5
+GND     | GND
+
+Pontentiometer | Arduino
+---------------|--------
+End            | 3.3V
+Wiper          | GPIO34
+End            | GND
+
+
+GPS | Arduino
+----|--------
+VCC | 5V
+RX  | GPIO17 (TX2)
+TX  | GPIO16 (RX2)
+GND | GND
+
 ## Configuration
 
 File `CloudScale.exe.config` has the `ServerHost` setting to define the MQTT broker address.
