@@ -123,7 +123,7 @@ namespace CloudScale
             }
         }
 
-        private void NetClient_MessageReceived(object sender, NetMessage e)
+        private void NetClient_MessageReceived(object sender, NetClient.Message e)
         {
             var deviceId = e.Topic;
             var remoteScale = m_RemoteScales.FirstOrDefault(scale => scale.DeviceId == deviceId);

@@ -12,11 +12,16 @@ namespace CloudScale
     {
         IManagedMqttClient m_MqttClient;
 
-        public NetClient(string topicPrefix)
+        public NetClient()
         {
-            TopicPrefix = topicPrefix;
             m_MqttClient = new MqttFactory().CreateManagedMqttClient();
             m_MqttClient.UseApplicationMessageReceivedHandler(e => MessageReceivedHandler(e));
+        }
+
+        public NetClient(string baseTopic)
+            : this()
+        {
+            BaseTopic = baseTopic;
         }
 
         public void Dispose()
@@ -25,13 +30,13 @@ namespace CloudScale
             m_MqttClient = null;
         }
 
-        public string TopicPrefix { get; }
+        public string BaseTopic { get; }
 
-        public async Task StartAsync(string host)
+        public async Task StartAsync(string host, int? port = null)
         {
             var options = new MqttClientOptionsBuilder()
                 .WithClientId(Guid.NewGuid().ToString())
-                .WithTcpServer(host)
+                .WithTcpServer(host, port)
                 .Build();
             var options2 = new ManagedMqttClientOptionsBuilder()
                 .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
@@ -44,10 +49,18 @@ namespace CloudScale
             await m_MqttClient.StopAsync();
         }
 
+        public bool IsConnected => m_MqttClient.IsConnected;
+
         public async Task SubscribeAsync(string topic)
         {
             topic = GetFullTopic(topic);
             await m_MqttClient.SubscribeAsync(topic);
+        }
+
+        public async Task PublishAsync(string topic)
+        {
+            topic = GetFullTopic(topic);
+            await m_MqttClient.PublishAsync(topic);
         }
 
         public async Task PublishAsync(string topic, string payload)
@@ -58,16 +71,24 @@ namespace CloudScale
 
         private void MessageReceivedHandler(MqttApplicationMessageReceivedEventArgs e)
         {
-            var e2 = new NetMessage();
+            var e2 = new Message();
             e2.Topic = GetSubTopic(e.ApplicationMessage.Topic);
             e2.Payload = e.ApplicationMessage.Payload != null ? Encoding.UTF8.GetString(e.ApplicationMessage.Payload) : null;
             MessageReceived?.Invoke(this, e2);
         }
 
-        public event EventHandler<NetMessage> MessageReceived;
+        public event EventHandler<Message> MessageReceived;
 
-        private string GetFullTopic(string topic) => $"{TopicPrefix}/{topic}";
+        private string GetFullTopic(string topic) => string.IsNullOrWhiteSpace(BaseTopic) ? topic : $"{BaseTopic}/{topic}";
 
-        private string GetSubTopic(string topic) => topic.StartsWith(TopicPrefix) ? topic.Substring(TopicPrefix.Length).TrimStart('/') : throw new ArgumentException("Wrong topic", nameof(topic));
+        private string GetSubTopic(string topic) => string.IsNullOrWhiteSpace(BaseTopic) ? topic :
+            topic.StartsWith(BaseTopic) ? topic.Substring(BaseTopic.Length).TrimStart('/') : throw new ArgumentException("Wrong topic", nameof(topic));
+
+        public class Message
+        {
+            public string Topic { get; set; }
+
+            public string Payload { get; set; }
+        }
     }
 }

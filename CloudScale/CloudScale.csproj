@@ -114,7 +114,6 @@
     <Compile Include="BaseScale.cs" />
     <Compile Include="NetClient.cs" />
     <Compile Include="LocalScale.cs" />
-    <Compile Include="NetMessage.cs" />
     <Compile Include="ScaleControl.xaml.cs">
       <DependentUpon>ScaleControl.xaml</DependentUpon>
     </Compile>
