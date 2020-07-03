@@ -6,9 +6,9 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CloudScale
+namespace CloudScale.Shared
 {
-    class NetClient : IDisposable
+    public class NetClient : IDisposable
     {
         IManagedMqttClient m_MqttClient;
 

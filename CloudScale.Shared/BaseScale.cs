@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel;
 
-namespace CloudScale
+namespace CloudScale.Shared
 {
-    class BaseScale : INotifyPropertyChanged
+    public class BaseScale : INotifyPropertyChanged
     {
         string m_DeviceId;
 
