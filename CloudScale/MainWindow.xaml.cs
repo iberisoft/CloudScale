@@ -87,7 +87,7 @@ namespace CloudScale
         }
 
         NetClient m_NetClient;
-        ObservableCollection<BaseScale> m_RemoteScales = new ObservableCollection<BaseScale>();
+        readonly ObservableCollection<BaseScale> m_RemoteScales = new ObservableCollection<BaseScale>();
 
         private async Task OpenHost()
         {

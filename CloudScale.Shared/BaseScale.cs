@@ -48,10 +48,13 @@ namespace CloudScale.Shared
                 {
                     m_Resistance = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Resistance)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResistanceInPercent)));
                     IsPropertyChanged = true;
                 }
             }
         }
+
+        public float ResistanceInPercent => Resistance * 100;
 
         float[] m_GlobalPosition;
 
