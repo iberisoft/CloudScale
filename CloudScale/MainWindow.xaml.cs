@@ -1,6 +1,7 @@
 ﻿using CloudScale.Shared;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace CloudScale
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public MainWindow()
         {
@@ -96,11 +97,13 @@ namespace CloudScale
             }
 
             m_NetClient = new NetClient("cloud/scale");
+            m_NetClient.IsConnectedChanged += NetClient_IsConnectedChanged;
             m_NetClient.MessageReceived += NetClient_MessageReceived;
             await m_NetClient.StartAsync(Properties.Settings.Default.ServerHost);
             await m_NetClient.SubscribeAsync("+");
 
             RemoteScalesControl.DataContext = m_RemoteScales;
+            NotifyHostConnected();
         }
 
         private async Task CloseHost()
@@ -111,9 +114,12 @@ namespace CloudScale
             }
 
             await m_NetClient.StopAsync();
+            m_NetClient.IsConnectedChanged -= NetClient_IsConnectedChanged;
             m_NetClient.MessageReceived -= NetClient_MessageReceived;
             m_NetClient.Dispose();
             m_NetClient = null;
+
+            NotifyHostConnected();
         }
 
         private async Task UpdateHost()
@@ -123,6 +129,15 @@ namespace CloudScale
                 await m_NetClient.PublishAsync($"{m_Scale.DeviceId}", m_Scale.ToJsonString());
             }
         }
+
+        public bool IsHostConnected => m_NetClient?.IsConnected == true;
+
+        private void NetClient_IsConnectedChanged(object sender, EventArgs e)
+        {
+            NotifyHostConnected();
+        }
+
+        private void NotifyHostConnected() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsHostConnected)));
 
         private void NetClient_MessageReceived(object sender, NetClient.Message e)
         {
@@ -135,5 +150,7 @@ namespace CloudScale
             }
             remoteScale.FromJsonString(e.Payload);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

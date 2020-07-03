@@ -15,6 +15,8 @@ namespace CloudScale.Shared
         public NetClient()
         {
             m_MqttClient = new MqttFactory().CreateManagedMqttClient();
+            m_MqttClient.UseConnectedHandler(e => IsConnectedChanged?.Invoke(this, EventArgs.Empty));
+            m_MqttClient.UseDisconnectedHandler(e => IsConnectedChanged?.Invoke(this, EventArgs.Empty));
             m_MqttClient.UseApplicationMessageReceivedHandler(e => MessageReceivedHandler(e));
         }
 
@@ -49,7 +51,9 @@ namespace CloudScale.Shared
             await m_MqttClient.StopAsync();
         }
 
-        public bool IsConnected => m_MqttClient.IsConnected;
+        public bool IsConnected => m_MqttClient?.IsConnected == true;
+
+        public event EventHandler IsConnectedChanged;
 
         public async Task SubscribeAsync(string topic)
         {
