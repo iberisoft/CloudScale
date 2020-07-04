@@ -1,8 +1,13 @@
+#if defined(ESP8266)
+#include <SoftwareSerial.h> 
+#include <ESP8266WiFi.h>
+#else
 #include <HardwareSerial.h> 
-#include <TinyGPS.h> 
 #include <WiFi.h>
+#endif
 #include <PubSubClient.h>
 #include <EEPROM.h>
+#include <TinyGPS.h> 
 #include "DeviceConfig.h"
 #include "WiFiConfig.h"
 #include "ServerConfig.h"
@@ -26,7 +31,10 @@ void loop()
 	{
 		publishData();
 	}
-	readCommand();
+	if (Serial.available())
+	{
+		readCommand();
+	}
 }
 
 void readCommand()

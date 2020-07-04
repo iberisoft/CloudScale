@@ -1,3 +1,7 @@
+#if defined(ESP8266)
+SoftwareSerial Serial2(gpsRxPin, gpsTxPin);
+#endif
+
 void setupGps()
 {
 	Serial2.begin(9600);
