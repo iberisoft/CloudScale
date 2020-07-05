@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudScaleApp.ScaleView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
+        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
+        <Label Grid.Row="1" Grid.Column="0" Text="Distance:" />
+        <Label Grid.Row="1" Grid.Column="1">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Path=Distance}" />
+                    <Span Text=" cm" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label Grid.Row="2" Grid.Column="0" Text="Resistance:" />
+        <Label Grid.Row="2" Grid.Column="1">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Path=ResistanceInPercent}" />
+                    <Span Text="%" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label Grid.Row="3" Grid.Column="0" Text="GPS:" />
+        <Label Grid.Row="3" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Path=GlobalPosition[0]}" />
+                    <Span Text="&#176;" />
+                    <Span Text=" / " />
+                    <Span Text="{Binding Path=GlobalPosition[1]}" />
+                    <Span Text="&#176;" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </Grid>
+</ContentView>

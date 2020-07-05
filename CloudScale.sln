@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale", "CloudScale\CloudScale.csproj", "{1AFAB48B-C647-4793-850E-A2E941FBB66A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScaleApp.Android", "CloudScaleApp\CloudScaleApp.Android\CloudScaleApp.Android.csproj", "{687DD326-3C58-48BE-B5FD-6547D6C47AD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudScaleApp", "CloudScaleApp\CloudScaleApp\CloudScaleApp.csproj", "{CE19AC4E-9C55-40DF-9A1D-B9A4D01F1962}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Shared", "CloudScale.Shared\CloudScale.Shared.csproj", "{8DE832D0-0587-4B82-B172-5A5554E13513}"
 EndProject
 Global
@@ -17,6 +21,16 @@ Global
 		{1AFAB48B-C647-4793-850E-A2E941FBB66A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AFAB48B-C647-4793-850E-A2E941FBB66A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AFAB48B-C647-4793-850E-A2E941FBB66A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687DD326-3C58-48BE-B5FD-6547D6C47AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687DD326-3C58-48BE-B5FD-6547D6C47AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687DD326-3C58-48BE-B5FD-6547D6C47AD4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{687DD326-3C58-48BE-B5FD-6547D6C47AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687DD326-3C58-48BE-B5FD-6547D6C47AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687DD326-3C58-48BE-B5FD-6547D6C47AD4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CE19AC4E-9C55-40DF-9A1D-B9A4D01F1962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE19AC4E-9C55-40DF-9A1D-B9A4D01F1962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE19AC4E-9C55-40DF-9A1D-B9A4D01F1962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE19AC4E-9C55-40DF-9A1D-B9A4D01F1962}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DE832D0-0587-4B82-B172-5A5554E13513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DE832D0-0587-4B82-B172-5A5554E13513}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DE832D0-0587-4B82-B172-5A5554E13513}.Release|Any CPU.ActiveCfg = Release|Any CPU
