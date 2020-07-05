@@ -67,10 +67,13 @@ namespace CloudScale.Shared
                 {
                     m_GlobalPosition = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GlobalPosition)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasGlobalPosition)));
                     IsPropertyChanged = true;
                 }
             }
         }
+
+        public bool HasGlobalPosition => GlobalPosition != null;
 
         protected bool IsPropertyChanged { get; set; }
 

@@ -100,7 +100,11 @@ namespace CloudScale
 
         private float GetSingleValue(string command) => float.Parse(GetStringValue(command), CultureInfo.InvariantCulture);
 
-        private float[] GetSingleValues(string command) => GetStringValue(command).Split(',').Select(token => float.Parse(token, CultureInfo.InvariantCulture)).ToArray();
+        private float[] GetSingleValues(string command)
+        {
+            var value = GetStringValue(command);
+            return value != "" ? value.Split(',').Select(token => float.Parse(token, CultureInfo.InvariantCulture)).ToArray() : null;
+        }
 
         public event EventHandler PropertiesChanged;
 

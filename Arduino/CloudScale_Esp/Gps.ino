@@ -8,8 +8,8 @@ void setupGps()
 }
 
 TinyGPS gps;
-float latitude = -1;
-float longitude = -1;
+float latitude = -100;
+float longitude = -100;
 unsigned long gpsTime = 0;
 
 void pollGps()
@@ -27,13 +27,13 @@ void pollGps()
 	unsigned long age = millis() - gpsTime;
 	if (age > gpsTimeout || age < 0)
 	{
-		latitude = -1;
-		longitude = -1;
+		latitude = -100;
+		longitude = -100;
 		gpsTime = millis();
 	}
 }
 
 String readGps()
 {
-	return String(latitude) + "," + String(longitude);
+	return latitude != -100 && longitude != -100 ? "[" + String(latitude) + "," + String(longitude) + "]" : "null";
 }

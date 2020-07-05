@@ -54,7 +54,7 @@ void publishData()
 	String data =
 		"{\"Distance\": " + String(readUss()) + "," +
 		"\"Resistance\": " + String(readResistor()) + "," +
-		"\"GlobalPosition\": [" + readGps() + "]}";
+		"\"GlobalPosition\": " + readGps() + "}";
 	if (currentData != data)
 	{
 		currentData = data;
