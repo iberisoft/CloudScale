@@ -44,6 +44,29 @@ RX  | D4 (TX)
 TX  | D3 (RX)
 GND | GND
 
+### WEMOS D1 Mini
+
+HC-SR04 | ESP8266
+--------|--------
+VCC     | 5V
+TRIG    | D6 (GPIO12)
+ECHO    | D7 (GPIO13)
+GND     | GND
+
+Pontentiometer | Arduino
+---------------|--------
+End            | 3.3V
+Wiper          | A0
+End            | GND
+
+
+GPS | Arduino
+----|--------
+VCC | 5V
+RX  | D2 (GPIO4)
+TX  | D1 (GPIO5)
+GND | GND
+
 ### ESP32
 
 HC-SR04 | ESP32
