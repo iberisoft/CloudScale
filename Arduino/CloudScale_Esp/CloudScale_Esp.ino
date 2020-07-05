@@ -24,12 +24,18 @@ void setup()
 	setupServer();
 }
 
+unsigned long publishTime = 0;
+
 void loop()
 {
 	pollGps();
-	if (connectServer())
+	if (millis() - publishTime > 1000)
 	{
-		publishData();
+		publishTime = millis();
+		if (connectServer())
+		{
+			publishData();
+		}
 	}
 	if (Serial.available())
 	{
