@@ -6,13 +6,14 @@
              Style="{StaticResource PageStyle}">
     <StackLayout>
         <Label Text="{Binding Source={x:Static local:Settings.Default}, Path=ServerHost}" FontAttributes="Bold" IsEnabled="{Binding Path=IsHostConnected}" />
-        <CarouselView x:Name="RemoteScalesView">
+        <CarouselView x:Name="RemoteScalesView" IndicatorView="RemoteScalesIndicatorView">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <local:ScaleView />
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
+        <IndicatorView x:Name="RemoteScalesIndicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="DarkGray" />
         <Button Text="Settings" Clicked="OpenSettings" />
     </StackLayout>
 </ContentPage>
