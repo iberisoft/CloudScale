@@ -12,7 +12,7 @@ void readUss()
 	delayMicroseconds(10);
 	digitalWrite(ussTriggerPin, LOW);
 
-	float duration = pulseIn(ussEchoPin, HIGH);
+	float duration = pulseIn(ussEchoPin, HIGH, 10000);
 	float distance = duration * 0.0343 / 2;
 	Serial.print(distance);
 	Serial.print('\n');
