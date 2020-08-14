@@ -53,14 +53,14 @@ TRIG    | D6 (GPIO12)
 ECHO    | D7 (GPIO13)
 GND     | GND
 
-Pontentiometer | Arduino
+Pontentiometer | ESP8266
 ---------------|--------
 End            | 3.3V
 Wiper          | A0
 End            | GND
 
 
-GPS | Arduino
+GPS | ESP8266
 ----|--------
 VCC | 5V
 RX  | D2 (GPIO4)
@@ -76,14 +76,14 @@ TRIG    | GPIO4
 ECHO    | GPIO5
 GND     | GND
 
-Pontentiometer | Arduino
+Pontentiometer | ESP32
 ---------------|--------
 End            | 3.3V
 Wiper          | GPIO34
 End            | GND
 
 
-GPS | Arduino
+GPS | ESP32
 ----|--------
 VCC | 5V
 RX  | GPIO17 (TX2)
