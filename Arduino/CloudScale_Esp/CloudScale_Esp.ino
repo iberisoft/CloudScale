@@ -64,6 +64,6 @@ void publishData()
 	if (currentData != data)
 	{
 		currentData = data;
-		publishData(currentData.c_str());
+		publishData(currentData);
 	}
 }
