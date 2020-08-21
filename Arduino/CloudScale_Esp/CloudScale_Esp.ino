@@ -15,7 +15,6 @@ void setup()
 	Serial.begin(9600);
 	Serial.println();
 
-	setupUss();
 	setupGps();
 	setupWiFi();
 	setupServer();
@@ -55,7 +54,6 @@ String currentData;
 void publishData()
 {
 	StaticJsonDocument<256> doc;
-	doc["Distance"] = readUss();
 	doc["Resistance"] = readResistor();
 	float latitude, longitude;
 	if (readGps(latitude, longitude))

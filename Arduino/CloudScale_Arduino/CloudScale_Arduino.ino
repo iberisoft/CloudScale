@@ -6,7 +6,6 @@ void setup()
 {
 	Serial.begin(9600);
 
-	setupUss();
 	setupGps();
 }
 
@@ -26,11 +25,6 @@ void readCommand()
 	{
 		Serial.print(deviceId);
 		Serial.print('\n');
-		return;
-	}
-	if (command == "USD")
-	{
-		readUss();
 		return;
 	}
 	if (command == "GPS")
