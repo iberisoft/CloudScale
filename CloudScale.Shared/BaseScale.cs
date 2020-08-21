@@ -21,22 +21,6 @@ namespace CloudScale.Shared
             }
         }
 
-        float m_Distance;
-
-        public float Distance
-        {
-            get => m_Distance;
-            set
-            {
-                if (m_Distance != value)
-                {
-                    m_Distance = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Distance)));
-                    IsPropertyChanged = true;
-                }
-            }
-        }
-
         float m_Resistance;
 
         public float Resistance
@@ -79,7 +63,7 @@ namespace CloudScale.Shared
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string ToJsonString() => JsonConvert.SerializeObject(new { Distance, Resistance, GlobalPosition });
+        public string ToJsonString() => JsonConvert.SerializeObject(new { Resistance, GlobalPosition });
 
         public void FromJsonString(string text) => JsonConvert.PopulateObject(text, this);
     }

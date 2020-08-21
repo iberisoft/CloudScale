@@ -7,7 +7,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -15,12 +14,10 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Device ID:" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId, Mode=OneWay}" IsReadOnly="True" />
-        <Label Grid.Row="1" Grid.Column="0" Content="Distance:" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Distance, Mode=OneWay}" IsReadOnly="True" />
-        <Label Grid.Row="2" Grid.Column="0" Content="Resistance:" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=Resistance, Mode=OneWay}" IsReadOnly="True" />
-        <Label Grid.Row="3" Grid.Column="0" Content="GPS:" />
-        <UniformGrid Grid.Row="3" Grid.Column="1" Rows="1">
+        <Label Grid.Row="1" Grid.Column="0" Content="Resistance:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Resistance, Mode=OneWay}" IsReadOnly="True" />
+        <Label Grid.Row="2" Grid.Column="0" Content="GPS:" />
+        <UniformGrid Grid.Row="2" Grid.Column="1" Rows="1">
             <TextBox Text="{Binding Path=GlobalPosition[0], Mode=OneWay}" IsReadOnly="True" />
             <TextBox Text="{Binding Path=GlobalPosition[1], Mode=OneWay}" IsReadOnly="True" />
         </UniformGrid>

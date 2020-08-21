@@ -62,7 +62,6 @@ namespace CloudScale
                     {
                         DeviceId = GetStringValue("ID");
                     }
-                    Distance = GetSingleValue("USD");
                     Resistance = GetSingleValue("R");
                     GlobalPosition = GetSingleValues("GPS");
                     if (IsPropertyChanged)
