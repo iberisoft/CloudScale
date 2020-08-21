@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel;
 
 namespace CloudScale.Shared
@@ -63,8 +63,25 @@ namespace CloudScale.Shared
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string ToJsonString() => JsonConvert.SerializeObject(new { Resistance, GlobalPosition });
+        public string ToJsonString()
+        {
+            var obj = new JObject();
+            obj["resistance"] = Resistance;
+            if (GlobalPosition != null)
+            {
+                obj["global_position"] = new JArray(GlobalPosition);
+            }
+            return obj.ToString();
+        }
 
-        public void FromJsonString(string text) => JsonConvert.PopulateObject(text, this);
+        public void FromJsonString(string text)
+        {
+            var obj = JObject.Parse(text);
+            Resistance = (float)obj["resistance"];
+            if (obj["global_position"] != null)
+            {
+                GlobalPosition = obj["global_position"].ToObject<float[]>();
+            }
+        }
     }
 }

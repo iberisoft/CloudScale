@@ -54,11 +54,11 @@ String currentData;
 void publishData()
 {
 	StaticJsonDocument<256> doc;
-	doc["Resistance"] = readResistor();
+	doc["resistance"] = readResistor();
 	float latitude, longitude;
 	if (readGps(latitude, longitude))
 	{
-		JsonArray globalPosition = doc.createNestedArray("GlobalPosition");
+		JsonArray globalPosition = doc.createNestedArray("global_position");
 		globalPosition[0] = latitude;
 		globalPosition[1] = longitude;
 	}
