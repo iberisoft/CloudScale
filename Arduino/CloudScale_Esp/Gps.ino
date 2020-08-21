@@ -33,7 +33,16 @@ void pollGps()
 	}
 }
 
-String readGps()
+bool readGps(float& latitude2, float& longitude2)
 {
-	return latitude != -100 && longitude != -100 ? "[" + String(latitude) + "," + String(longitude) + "]" : "null";
+	if (latitude != -100 && longitude != -100)
+	{
+		latitude2 = latitude;
+		longitude2 = longitude;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

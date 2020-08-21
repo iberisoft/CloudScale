@@ -1,15 +1,13 @@
 #if defined(ESP8266)
 #include <SoftwareSerial.h> 
-#include <ESP8266WiFi.h>
 #else
 #include <HardwareSerial.h> 
-#include <WiFi.h>
 #endif
+#include <WiFiManager.h>
 #include <PubSubClient.h>
-#include <EEPROM.h>
+#include <ArduinoJson.h>
 #include <TinyGPS.h> 
 #include "DeviceConfig.h"
-#include "WiFiConfig.h"
 #include "ServerConfig.h"
 
 void setup()
@@ -19,8 +17,7 @@ void setup()
 
 	setupUss();
 	setupGps();
-	readWiFiConfig();
-	setupWiFi(readCommand);
+	setupWiFi();
 	setupServer();
 }
 
@@ -37,6 +34,7 @@ void loop()
 			publishData();
 		}
 	}
+
 	if (Serial.available())
 	{
 		readCommand();
@@ -46,10 +44,9 @@ void loop()
 void readCommand()
 {
 	String command = Serial.readStringUntil('\n');
-	if (command == "CLR")
+	if (command == "RST")
 	{
-		clearWiFiConfig();
-		ESP.restart();
+		resetWiFi();
 	}
 }
 
@@ -57,10 +54,18 @@ String currentData;
 
 void publishData()
 {
-	String data =
-		"{\"Distance\": " + String(readUss()) + "," +
-		"\"Resistance\": " + String(readResistor()) + "," +
-		"\"GlobalPosition\": " + readGps() + "}";
+	StaticJsonDocument<256> doc;
+	doc["Distance"] = readUss();
+	doc["Resistance"] = readResistor();
+	float latitude, longitude;
+	if (readGps(latitude, longitude))
+	{
+		JsonArray globalPosition = doc.createNestedArray("GlobalPosition");
+		globalPosition[0] = latitude;
+		globalPosition[1] = longitude;
+	}
+	String data;
+	serializeJson(doc, data);
 	if (currentData != data)
 	{
 		currentData = data;

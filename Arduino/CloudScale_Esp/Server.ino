@@ -3,15 +3,14 @@ PubSubClient client(networkClient);
 
 void setupServer()
 {
-	client.setServer(serverHost, serverPort);
+	client.setServer(serverHost.c_str(), serverPort);
 }
 
 bool connectServer()
 {
-	bool connected = false;
 	if (client.connected())
 	{
-		connected = true;
+		return true;
 	}
 	else
 	{
@@ -19,20 +18,22 @@ bool connectServer()
 		Serial.print(serverHost);
 		Serial.print(":");
 		Serial.println(serverPort);
-		if (client.connect(deviceId))
+
+		if (client.connect(deviceName.c_str()))
 		{
-			connected = true;
 			Serial.println("Server connected");
+			return true;
 		}
+		return false;
 	}
-	return connected;
 }
 
-String deviceTopic = String(topicPrefix) + "/" + deviceId;
+String deviceTopic = topicPrefix + "/" + deviceId;
 
 void publishData(String data)
 {
 	client.publish(deviceTopic.c_str(), data.c_str());
+
 	Serial.print(deviceTopic);
 	Serial.print(": ");
 	Serial.println(data);

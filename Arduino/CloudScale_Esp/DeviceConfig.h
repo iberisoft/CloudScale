@@ -1,4 +1,5 @@
-const char* deviceId = "00000";
+String deviceId = "00000";
+String deviceName = "CloudScale_" + deviceId;
 
 #if defined(ESP8266)
 const int ussTriggerPin = D6;
