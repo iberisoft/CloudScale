@@ -1,4 +1,4 @@
-const char* deviceId = "12345";
+String deviceId = "12345";
 
 const int ussTriggerPin = 9;
 const int ussEchoPin = 10;
