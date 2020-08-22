@@ -5,6 +5,8 @@ The prototype project for IoT integrates:
 * 1 kOhm pontentiometer
 * [Ublox NEO-6 GPS](https://www.u-blox.com/sites/default/files/products/documents/NEO-6_DataSheet_(GPS.G6-HW-09005).pdf)
 
+## Arduino Version
+
 The Arduino board accepts four commands from the host computer:
 
 * `ID` gets the device ID
@@ -16,6 +18,15 @@ Besides that the application subscribes to MQTT messages sent by other devices t
 
 Finally, the user can see as her local device ID, resistance, and global position as these values returned by other devices
 connected to the same MQTT broker.
+
+## ESP Version
+
+![WEMOS D1 Mini](Images/Breadboard.jpg)
+
+The ESP board does not involve a host computer, it rather publishes MQTT messages with topic `cloud/scale/{device-id}` and
+resistance, global position in JSON payload directly to the broker.
+
+The user can see the device ID, resistance, and global position returned by devices connected to an MQTT broker via the Android app.
 
 ## Connections
 
