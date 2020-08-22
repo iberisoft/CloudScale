@@ -19,18 +19,7 @@ Besides that the application subscribes to MQTT messages sent by other devices t
 Finally, the user can see as her local device ID, resistance, and global position as these values returned by other devices
 connected to the same MQTT broker.
 
-## ESP Version
-
-![WEMOS D1 Mini](Images/Breadboard.jpg)
-
-The ESP board does not involve a host computer, it rather publishes MQTT messages with topic `cloud/scale/{device-id}` and
-resistance, global position in JSON payload directly to the broker.
-
-The user can see the device ID, resistance, and global position returned by devices connected to an MQTT broker via the Android app.
-
-## Connections
-
-### Arduino
+### Connections
 
 Pontentiometer | Arduino
 ---------------|--------
@@ -46,7 +35,22 @@ RX  | D4 (TX)
 TX  | D3 (RX)
 GND | GND
 
-### WEMOS D1 Mini
+### Configuration
+
+File `CloudScale.exe.config` has the `ServerHost` setting to define the MQTT broker address.
+
+## ESP Version
+
+![WEMOS D1 Mini](Images/Breadboard.jpg)
+
+The ESP board does not involve a host computer, it rather publishes MQTT messages with topic `cloud/scale/{device-id}` and
+resistance, global position in JSON payload directly to the broker.
+
+The user can see the device ID, resistance, and global position returned by devices connected to an MQTT broker via the Android app.
+
+### Connections
+
+#### WEMOS D1 Mini
 
 Pontentiometer | ESP8266
 ---------------|--------
@@ -62,7 +66,7 @@ RX  | D2 (GPIO4)
 TX  | D1 (GPIO5)
 GND | GND
 
-### ESP32
+#### ESP32
 
 Pontentiometer | ESP32
 ---------------|--------
@@ -77,7 +81,3 @@ VCC | 5V
 RX  | GPIO17 (TX2)
 TX  | GPIO16 (RX2)
 GND | GND
-
-## Configuration
-
-File `CloudScale.exe.config` has the `ServerHost` setting to define the MQTT broker address.
