@@ -81,3 +81,20 @@ VCC | 5V
 RX  | GPIO17 (TX2)
 TX  | GPIO16 (RX2)
 GND | GND
+
+### Configuration
+
+The board initially creates a temporary wireless network with name `CloudScale_xxxxx`. Connect to this network and open the Wi-Fi Manager by navigating to
+web page `192.168.4.1`.
+
+![](Images/WiFi-Manager.png)
+
+Click `Configure WiFi` button on the page. After opening a new page, enter `SSID` (alternatively, one can select it from available wireless networks)
+and `Password` of the wireless network being used later to access the Internet.
+
+![](Images/WiFi-Config.png)
+
+Finally, the board reboots and connects to the permanent network selected above.
+
+The configuration procedure will restart after rebooting if the currently selected wireless network gets offline. It can be forced by sending `RST`
+command to the board via USB cable in a serial monitor.
