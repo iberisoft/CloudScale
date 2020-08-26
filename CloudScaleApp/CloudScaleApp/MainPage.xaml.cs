@@ -1,4 +1,5 @@
 ﻿using CloudScale.Shared;
+using MqttHelper;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -71,7 +72,7 @@ namespace CloudScaleApp
 
         private void NotifyHostConnected() => OnPropertyChanged(nameof(IsHostConnected));
 
-        private void NetClient_MessageReceived(object sender, NetClient.Message e)
+        private void NetClient_MessageReceived(object sender, NetMessage e)
         {
             var deviceId = e.Topic;
             var remoteScale = m_RemoteScales.FirstOrDefault(scale => scale.DeviceId == deviceId);

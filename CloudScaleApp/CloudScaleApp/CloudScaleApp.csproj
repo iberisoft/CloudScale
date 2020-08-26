@@ -19,5 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CloudScale.Shared\CloudScale.Shared.csproj" />
+    <ProjectReference Include="..\..\MqttHelper\MqttHelper\MqttHelper.csproj" />
   </ItemGroup>
 </Project>
