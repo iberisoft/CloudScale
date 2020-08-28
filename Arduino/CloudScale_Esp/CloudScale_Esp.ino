@@ -6,9 +6,14 @@
 #include <WiFiManager.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#if defined(ESP8266)
+#include <FS.h>
+#else
+#include <SPIFFS.h>
+#endif
 #include <TinyGPS.h> 
 #include "DeviceConfig.h"
-#include "ServerConfig.h"
+#include "Settings.h"
 
 void setup()
 {

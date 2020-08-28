@@ -94,6 +94,8 @@ and `Password` of the wireless network being used later to access the Internet.
 
 ![](Images/WiFi-Config.png)
 
+Enter `Server Host` and `Server Port` if needed. Do not change `Topic Prefix`, it should be always `cloud/scale`.
+
 Finally, the board reboots and connects to the permanent network selected above.
 
 The configuration procedure will restart after rebooting if the currently selected wireless network gets offline. It can be forced by sending `RST`
