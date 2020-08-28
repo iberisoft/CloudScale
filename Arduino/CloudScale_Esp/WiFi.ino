@@ -46,5 +46,6 @@ void saveConfigCallback()
 void resetWiFi()
 {
 	wifiManager.resetSettings();
+	delay(1000);
 	wifiManager.reboot();
 }
