@@ -11,3 +11,5 @@ const int resistorPin = 34;
 const int maxResistance = 4095;
 #endif
 const int gpsTimeout = 60000;
+
+const int deviceIdle = 1000;

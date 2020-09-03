@@ -14,12 +14,13 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
         <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
-        <Label Grid.Row="1" Grid.Column="0" Text="Resistance:" />
+        <Label Grid.Row="1" Grid.Column="0" Text="Weight:" />
         <Label Grid.Row="1" Grid.Column="1">
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="{Binding Path=ResistanceInPercent}" />
-                    <Span Text="%" />
+                    <Span Text="{Binding Path=Weight}" />
+                    <Span Text=" " />
+                    <Span Text="kg" />
                 </FormattedString>
             </Label.FormattedText>
         </Label>
@@ -27,10 +28,10 @@
         <Label Grid.Row="2" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="{Binding Path=GlobalPosition[0]}" />
+                    <Span Text="{Binding Path=GlobalPosition.Latitude}" />
                     <Span Text="&#176;" />
                     <Span Text=" / " />
-                    <Span Text="{Binding Path=GlobalPosition[1]}" />
+                    <Span Text="{Binding Path=GlobalPosition.Longitude}" />
                     <Span Text="&#176;" />
                 </FormattedString>
             </Label.FormattedText>

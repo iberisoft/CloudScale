@@ -41,7 +41,7 @@ namespace CloudScaleApp
             m_NetClient.IsConnectedChanged += NetClient_IsConnectedChanged;
             m_NetClient.MessageReceived += NetClient_MessageReceived;
             await m_NetClient.StartAsync(Settings.Default.ServerHost);
-            await m_NetClient.SubscribeAsync("+");
+            await m_NetClient.SubscribeAsync("+/+");
 
             RemoteScalesView.ItemsSource = m_RemoteScales;
             NotifyHostConnected();
@@ -74,14 +74,23 @@ namespace CloudScaleApp
 
         private void NetClient_MessageReceived(object sender, NetMessage e)
         {
-            var deviceId = e.Topic;
+            var tokens = e.Topic.Split('/');
+            var deviceId = tokens[0];
             var remoteScale = m_RemoteScales.FirstOrDefault(scale => scale.DeviceId == deviceId);
             if (remoteScale == null)
             {
                 remoteScale = new BaseScale { DeviceId = deviceId };
                 Dispatcher.BeginInvokeOnMainThread(() => m_RemoteScales.Add(remoteScale));
             }
-            remoteScale.FromJsonString(e.Payload);
+            switch (tokens[1])
+            {
+                case "weight":
+                    remoteScale.WeightFromJson(e.Payload);
+                    break;
+                case "global_position":
+                    remoteScale.GlobalPositionFromJson(e.Payload);
+                    break;
+            }
         }
 
         private async void OpenSettings(object sender, EventArgs e)

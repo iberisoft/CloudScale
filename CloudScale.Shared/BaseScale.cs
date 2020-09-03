@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace CloudScale.Shared
 {
@@ -16,72 +15,43 @@ namespace CloudScale.Shared
                 {
                     m_DeviceId = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeviceId)));
-                    IsPropertyChanged = true;
                 }
             }
         }
 
-        float m_Resistance;
+        float m_Weight;
 
-        public float Resistance
+        public float Weight
         {
-            get => m_Resistance;
+            get => m_Weight;
             set
             {
-                if (m_Resistance != value)
+                if (m_Weight != value)
                 {
-                    m_Resistance = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Resistance)));
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResistanceInPercent)));
-                    IsPropertyChanged = true;
+                    m_Weight = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Weight)));
                 }
             }
         }
 
-        public float ResistanceInPercent => Resistance * 100;
+        GlobalPosition m_GlobalPosition;
 
-        float[] m_GlobalPosition;
-
-        public float[] GlobalPosition
+        public GlobalPosition GlobalPosition
         {
             get => m_GlobalPosition;
             set
             {
-                if (m_GlobalPosition?[0] != value?[0] || m_GlobalPosition?[1] != value?[1])
+                if (m_GlobalPosition?.Latitude != value?.Latitude || m_GlobalPosition?.Longitude != value?.Longitude)
                 {
                     m_GlobalPosition = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GlobalPosition)));
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasGlobalPosition)));
-                    IsPropertyChanged = true;
                 }
             }
         }
 
         public bool HasGlobalPosition => GlobalPosition != null;
 
-        protected bool IsPropertyChanged { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public string ToJsonString()
-        {
-            var obj = new JObject();
-            obj["resistance"] = Resistance;
-            if (GlobalPosition != null)
-            {
-                obj["global_position"] = new JArray(GlobalPosition);
-            }
-            return obj.ToString();
-        }
-
-        public void FromJsonString(string text)
-        {
-            var obj = JObject.Parse(text);
-            Resistance = (float)obj["resistance"];
-            if (obj["global_position"] != null)
-            {
-                GlobalPosition = obj["global_position"].ToObject<float[]>();
-            }
-        }
     }
 }
