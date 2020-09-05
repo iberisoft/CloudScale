@@ -1,6 +1,6 @@
 # Cloud Scale
 
-This prototype project for IoT integrates:
+This prototype project integrates for IoT:
 
 * 1 kOhm pontentiometer
 * [Ublox NEO-6 GPS](https://www.u-blox.com/sites/default/files/products/documents/NEO-6_DataSheet_(GPS.G6-HW-09005).pdf)
