@@ -9,7 +9,7 @@ void setupGps()
 
 TinyGPS gps;
 float latitude = -100;
-float longitude = -100;
+float longitude = -200;
 unsigned long gpsTime = 0;
 
 void pollGps()
@@ -28,14 +28,14 @@ void pollGps()
 	if (age > gpsTimeout || age < 0)
 	{
 		latitude = -100;
-		longitude = -100;
+		longitude = -200;
 		gpsTime = millis();
 	}
 }
 
 bool readGps(float& latitude2, float& longitude2)
 {
-	if (latitude != -100 && longitude != -100)
+	if (latitude != -100 && longitude != -200)
 	{
 		latitude2 = latitude;
 		longitude2 = longitude;
