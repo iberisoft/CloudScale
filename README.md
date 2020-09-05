@@ -1,56 +1,33 @@
 # Cloud Scale
 
-The prototype project for IoT integrates:
+This prototype project for IoT integrates:
 
 * 1 kOhm pontentiometer
 * [Ublox NEO-6 GPS](https://www.u-blox.com/sites/default/files/products/documents/NEO-6_DataSheet_(GPS.G6-HW-09005).pdf)
 
-## Arduino Version
-
-The Arduino board accepts four commands from the host computer:
-
-* `ID` gets the device ID
-* `R` gets the potentiometer resistance from 0 (min) to 1 (max)
-* `GPS` gets the latitude and longitude separated by comma
-
-The application publishes MQTT messages with topic `cloud/scale/{device-id}` and resistance, global position in JSON payload.
-Besides that the application subscribes to MQTT messages sent by other devices thru the same application.
-
-Finally, the user can see as her local device ID, resistance, and global position as these values returned by other devices
-connected to the same MQTT broker.
-
-### Connections
-
-Pontentiometer | Arduino
----------------|--------
-End            | 5V
-Wiper          | A0
-End            | GND
-
-
-GPS | Arduino
-----|--------
-VCC | 5V
-RX  | D4 (TX)
-TX  | D3 (RX)
-GND | GND
-
-### Configuration
-
-File `CloudScale.exe.config` has the `ServerHost` setting to define the MQTT broker address.
-
-## ESP Version
+It is based on ESP device connecting to the sensors mentioned above.
 
 ![WEMOS D1 Mini](Images/Breadboard.jpg)
 
-The ESP board does not involve a host computer, it rather publishes MQTT messages with topic `cloud/scale/{device-id}` and
-resistance, global position in JSON payload directly to the broker.
+## MQTT Messages
 
-The user can see the device ID, resistance, and global position returned by devices connected to an MQTT broker via the Android app.
+The device and its Android-based applications use the MQTT protocol for information exchange. The message topics start from `cloud/scale/id` where `id` is
+the device ID.
 
-### Connections
+### cloud/scale/id/weight
 
-#### WEMOS D1 Mini
+The device publishes the weight value. Payload is a JSON object:
+* `value`: current weight value in kg.
+
+### cloud/scale/id/global_position
+
+The device publishes the global position value. Payload is a JSON object:
+* `latitude`: latitude part of the current position; it varies from -90 to 90.
+* `longitude`: longitude part of the current position; it varies from -180 to 180.
+
+## Connections
+
+### WEMOS D1 Mini
 
 Pontentiometer | ESP8266
 ---------------|--------
@@ -66,7 +43,7 @@ RX  | D2 (GPIO4)
 TX  | D1 (GPIO5)
 GND | GND
 
-#### ESP32
+### ESP32
 
 Pontentiometer | ESP32
 ---------------|--------
@@ -82,7 +59,7 @@ RX  | GPIO17 (TX2)
 TX  | GPIO16 (RX2)
 GND | GND
 
-### Configuration
+## Configuration
 
 The board initially creates a temporary wireless network with name `CloudScale_xxxxx`. Connect to this network and open the Wi-Fi Manager by navigating to
 web page `192.168.4.1`.
