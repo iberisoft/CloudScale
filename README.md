@@ -22,7 +22,7 @@ The device publishes the weight value. Payload is a JSON object:
 ### cloud/scale/id/weight/calibration
 
 The device publishes the weight calibration table. Payload is a JSON array of objects:
-* `r`: resistor value corresponding to a calibration point.
+* `r`: pontentiometer resistance value corresponding to a calibration point.
 * `w`: weight value corresponding to a calibration point.
 
 ### cloud/scale/id/weight/calibration/clear
