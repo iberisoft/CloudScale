@@ -19,6 +19,36 @@ the device ID.
 The device publishes the weight value. Payload is a JSON object:
 * `value`: current weight value in kg.
 
+### cloud/scale/id/weight/calibration
+
+The device publishes the weight calibration table. Payload is a JSON array of objects:
+* `r`: resistor value corresponding to a calibration point.
+* `w`: weight value in kg corresponding to a calibration point.
+
+### cloud/scale/id/weight/calibration/clear
+
+An application publishes this message to clear the weight calibration table.
+
+After receving it, the device will publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
+
+### cloud/scale/id/weight/calibration/add
+
+An application publishes this message to add a point to the weight calibration table. Payload is a JSON object:
+* `value`: weight value in kg corresponding to the new calibration point.
+
+After receving it, the device will publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
+
+### cloud/scale/id/weight/calibration/remove
+
+An application publishes this message to remove a point from the weight calibration table. Payload is a JSON object:
+* `index`: index of the removing calibration point.
+
+After receving it, the device will publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
+
+### cloud/scale/id/weight/calibration/get
+
+An application publishes this message to force the device to publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
+
 ### cloud/scale/id/global_position
 
 The device publishes the global position value. Payload is a JSON object:

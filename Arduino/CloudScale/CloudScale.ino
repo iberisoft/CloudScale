@@ -12,6 +12,7 @@
 #include <SPIFFS.h>
 #endif
 #include <TinyGPS.h> 
+#include <LinkedList.h>
 #include "DeviceConfig.h"
 #include "Settings.h"
 #include "Server.h"
@@ -35,6 +36,7 @@ void loop()
 	switch (connectServer())
 	{
 	case 1:
+		subscribeData("weight/calibration/+");
 	case 2:
 		pollServer();
 		if (millis() - updateTime > deviceIdle)
@@ -72,15 +74,16 @@ float currentWeight = 0;
 
 void updateWeight()
 {
-	float value = readResistor();
-	if (currentWeight != value)
+	int r = readResistor();
+	float weight = convertToWeight(r);
+	if (currentWeight != weight)
 	{
 		StaticJsonDocument<256> doc;
-		doc["value"] = value;
+		doc["value"] = weight;
 		String data;
 		serializeJson(doc, data);
 		publishData("weight", data);
-		currentWeight = value;
+		currentWeight = weight;
 	}
 }
 
@@ -123,4 +126,24 @@ void updateGps()
 
 void receiveData(String topic, String data)
 {
+	if (topic == "weight/calibration/clear")
+	{
+		clearCalibration();
+		return;
+	}
+	if (topic == "weight/calibration/add")
+	{
+		addCalibration(data);
+		return;
+	}
+	if (topic == "weight/calibration/remove")
+	{
+		removeCalibration(data);
+		return;
+	}
+	if (topic == "weight/calibration/get")
+	{
+		getCalibration();
+		return;
+	}
 }

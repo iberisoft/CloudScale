@@ -14,7 +14,7 @@ void loadSettings()
 
 	if (SPIFFS.exists(settingsFilePath))
 	{
-		StaticJsonDocument<256> doc;
+		StaticJsonDocument<1024> doc;
 
 		File file = SPIFFS.open(settingsFilePath, "r");
 		deserializeJson(doc, file);
@@ -24,6 +24,8 @@ void loadSettings()
 		serverHost = (const char*)doc["serverHost"];
 		serverPort = doc["serverPort"];
 		topicPrefix = (const char*)doc["topicPrefix"];
+		JsonArray array = doc["calPoints"].as<JsonArray>();
+		loadCalibration(array);
 	}
 	else
 	{
@@ -33,11 +35,13 @@ void loadSettings()
 
 void saveSettings()
 {
-	StaticJsonDocument<256> doc;
+	StaticJsonDocument<1024> doc;
 
 	doc["serverHost"] = serverHost;
 	doc["serverPort"] = serverPort;
 	doc["topicPrefix"] = topicPrefix;
+	JsonArray array = doc.createNestedArray("calPoints");
+	saveCalibration(array);
 
 	File file = SPIFFS.open(settingsFilePath, "w");
 	serializeJson(doc, file);

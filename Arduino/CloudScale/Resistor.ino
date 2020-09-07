@@ -1,5 +1,4 @@
-float readResistor()
+int readResistor()
 {
-	float resistance = (float)analogRead(resistorPin) / maxResistance;
-	return resistance;
+	return analogRead(resistorPin);
 }
