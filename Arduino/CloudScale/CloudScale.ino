@@ -68,32 +68,32 @@ void readCommand()
 	}
 }
 
-float weightValue = 0;
+float currentWeight = 0;
 
 void updateWeight()
 {
 	float value = readResistor();
-	if (weightValue != value)
+	if (currentWeight != value)
 	{
 		StaticJsonDocument<256> doc;
 		doc["value"] = value;
 		String data;
 		serializeJson(doc, data);
 		publishData("weight", data);
-		weightValue = value;
+		currentWeight = value;
 	}
 }
 
 bool hasLatitudeLongitude = false;
-float latitudeValue;
-float longitudeValue;
+float currentLatitude;
+float currentLongitude;
 
 void updateGps()
 {
 	float latitude, longitude;
 	if (readGps(latitude, longitude))
 	{
-		if (!hasLatitudeLongitude || latitudeValue != latitude || longitudeValue != longitude)
+		if (!hasLatitudeLongitude || currentLatitude != latitude || currentLongitude != longitude)
 		{
 			StaticJsonDocument<256> doc;
 			doc["latitude"] = latitude;
@@ -101,8 +101,8 @@ void updateGps()
 			String data;
 			serializeJson(doc, data);
 			publishData("global_position", data);
-			latitudeValue = latitude;
-			longitudeValue = longitude;
+			currentLatitude = latitude;
+			currentLongitude = longitude;
 		}
 		hasLatitudeLongitude = true;
 	}
