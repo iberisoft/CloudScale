@@ -41,7 +41,8 @@ namespace CloudScaleApp
             m_NetClient.IsConnectedChanged += NetClient_IsConnectedChanged;
             m_NetClient.MessageReceived += NetClient_MessageReceived;
             await m_NetClient.StartAsync(Settings.Default.ServerHost);
-            await m_NetClient.SubscribeAsync("+/+");
+            await m_NetClient.SubscribeAsync("+/weight");
+            await m_NetClient.SubscribeAsync("+/global_position");
 
             RemoteScalesView.ItemsSource = m_RemoteScales;
             NotifyHostConnected();
