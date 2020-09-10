@@ -14,6 +14,10 @@ It is based on ESP device connecting to the sensors mentioned above.
 The device and its Android-based applications use the MQTT protocol for information exchange. The message topics start from `cloud/scale/id` where `id` is
 the device ID.
 
+### cloud/scale/id/heartbeat
+
+The device publishes this message periodically.
+
 ### cloud/scale/id/weight
 
 The device publishes the weight value. Payload is a JSON object:

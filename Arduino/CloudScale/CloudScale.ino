@@ -44,6 +44,7 @@ void loop()
 		if (millis() - updateTime > deviceIdle)
 		{
 			updateTime = millis();
+			heartbeat();
 			updateWeight();
 			updateGps();
 		}
@@ -70,6 +71,15 @@ void readCommand()
 		resetWiFi();
 		return;
 	}
+}
+
+void heartbeat()
+{
+	StaticJsonDocument<256> doc;
+	doc["ms"] = updateTime;
+	String data;
+	serializeJson(doc, data);
+	publishData("heartbeat", data);
 }
 
 float currentWeight = -1;
