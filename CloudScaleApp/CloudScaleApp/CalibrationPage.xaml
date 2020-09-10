@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:NetClientPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CloudScaleApp"
+             x:Class="CloudScaleApp.CalibrationPage"
+             x:Name="Page" Style="{StaticResource PageStyle}">
+    <StackLayout>
+        <Label Text="{Binding Source={x:Static local:Settings.Default}, Path=ServerHost}" FontAttributes="Bold" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
+            <Label Grid.Row="1" Grid.Column="0" Text="Weight:" />
+            <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=HasWeight}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding Path=Weight}" />
+                        <Span Text=" " />
+                        <Span Text="kg" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+        <Grid IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Entry x:Name="WeightEntry" Grid.Row="0" Grid.Column="0" Keyboard="Numeric" />
+            <Button Grid.Row="0" Grid.Column="1" Text="Add" Clicked="AddPoint" />
+            <Button Grid.Row="0" Grid.Column="2" Text="Clear" Clicked="ClearPoints" />
+        </Grid>
+        <CollectionView x:Name="TableView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}">
+                        <Label VerticalOptions="Center" Text="{Binding Path=Resistance}" />
+                        <Label VerticalOptions="Center" Text="&#x279c;" />
+                        <Label VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Path=Weight}" />
+                                    <Span Text=" " />
+                                    <Span Text="kg" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <ImageButton Source="cancel.png" Clicked="RemovePoint" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</local:NetClientPage>

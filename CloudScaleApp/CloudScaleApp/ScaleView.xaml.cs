@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace CloudScaleApp
 {
@@ -7,6 +8,11 @@ namespace CloudScaleApp
         public ScaleView()
         {
             InitializeComponent();
+        }
+
+        private async void OpenCalibration(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CalibrationPage { BindingContext = BindingContext });
         }
     }
 }

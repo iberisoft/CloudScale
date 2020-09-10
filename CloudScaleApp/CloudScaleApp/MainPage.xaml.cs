@@ -8,88 +8,48 @@ using Xamarin.Forms;
 
 namespace CloudScaleApp
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : NetClientPage
     {
         public MainPage()
         {
             InitializeComponent();
 
-            BindingContext = this;
+            RemoteScalesView.ItemsSource = m_RemoteScales;
         }
 
-        protected override async void OnAppearing()
-        {
-            await OpenHost();
-        }
-
-        protected override async void OnDisappearing()
-        {
-            await CloseHost();
-        }
-
-        NetClient m_NetClient;
         readonly ObservableCollection<BaseScale> m_RemoteScales = new ObservableCollection<BaseScale>();
 
-        private async Task OpenHost()
+        protected override async Task OpenHost()
         {
-            if (string.IsNullOrWhiteSpace(Settings.Default.ServerHost))
+            await base.OpenHost();
+
+            if (NetClient != null)
             {
-                return;
+                await NetClient.SubscribeAsync("+/heartbeat");
+                await NetClient.SubscribeAsync("+/weight");
+                await NetClient.SubscribeAsync("+/global_position");
             }
-
-            m_NetClient = new NetClient("cloud/scale");
-            m_NetClient.IsConnectedChanged += NetClient_IsConnectedChanged;
-            m_NetClient.MessageReceived += NetClient_MessageReceived;
-            await m_NetClient.StartAsync(Settings.Default.ServerHost);
-            await m_NetClient.SubscribeAsync("+/weight");
-            await m_NetClient.SubscribeAsync("+/global_position");
-
-            RemoteScalesView.ItemsSource = m_RemoteScales;
-            NotifyHostConnected();
         }
 
-        private async Task CloseHost()
+        protected override async void MessageReceivedHandler(string deviceId, string subTopic, string payload)
         {
-            if (m_NetClient == null)
-            {
-                return;
-            }
-
-            await m_NetClient.StopAsync();
-            m_NetClient.IsConnectedChanged -= NetClient_IsConnectedChanged;
-            m_NetClient.MessageReceived -= NetClient_MessageReceived;
-            m_NetClient.Dispose();
-            m_NetClient = null;
-
-            NotifyHostConnected();
-        }
-
-        public bool IsHostConnected => m_NetClient?.IsConnected == true;
-
-        private void NetClient_IsConnectedChanged(object sender, EventArgs e)
-        {
-            NotifyHostConnected();
-        }
-
-        private void NotifyHostConnected() => OnPropertyChanged(nameof(IsHostConnected));
-
-        private void NetClient_MessageReceived(object sender, NetMessage e)
-        {
-            var tokens = e.Topic.Split('/');
-            var deviceId = tokens[0];
             var remoteScale = m_RemoteScales.FirstOrDefault(scale => scale.DeviceId == deviceId);
-            if (remoteScale == null)
+            switch (subTopic)
             {
-                remoteScale = new BaseScale { DeviceId = deviceId };
-                Dispatcher.BeginInvokeOnMainThread(() => m_RemoteScales.Add(remoteScale));
-            }
-            switch (tokens[1])
-            {
+                case "heartbeat":
+                    if (remoteScale == null)
+                    {
+                        remoteScale = new BaseScale { DeviceId = deviceId };
+                        await Device.InvokeOnMainThreadAsync(() => m_RemoteScales.Add(remoteScale));
+                        await NetClient.PublishAsync($"{remoteScale.DeviceId}/weight/get");
+                        await NetClient.PublishAsync($"{remoteScale.DeviceId}/global_position/get");
+                    }
+                    break;
                 case "weight":
-                    remoteScale.WeightFromJson(e.Payload);
+                    remoteScale?.WeightFromJson(payload);
                     break;
                 case "global_position":
-                    remoteScale.GlobalPositionFromJson(e.Payload);
+                    remoteScale?.GlobalPositionFromJson(payload);
                     break;
             }
         }
