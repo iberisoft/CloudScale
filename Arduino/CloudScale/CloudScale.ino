@@ -36,7 +36,9 @@ void loop()
 	switch (connectServer())
 	{
 	case 1:
+		subscribeData("weight/get");
 		subscribeData("weight/calibration/+");
+		subscribeData("global_position/get");
 	case 2:
 		pollServer();
 		if (millis() - updateTime > deviceIdle)
@@ -70,7 +72,7 @@ void readCommand()
 	}
 }
 
-float currentWeight = 0;
+float currentWeight = -1;
 
 void updateWeight()
 {
@@ -78,20 +80,32 @@ void updateWeight()
 	float weight = convertToWeight(r);
 	if (currentWeight != weight)
 	{
-		StaticJsonDocument<256> doc;
-		if (weight != -1)
-		{
-			doc["value"] = weight;
-		}
-		else
-		{
-			doc["value"] = nullptr;
-		}
-		String data;
-		serializeJson(doc, data);
-		publishData("weight", data);
+		publishWeight(weight);
 		currentWeight = weight;
 	}
+}
+
+void getWeight()
+{
+	int r = readResistor();
+	float weight = convertToWeight(r);
+	publishWeight(weight);
+}
+
+void publishWeight(float weight)
+{
+	StaticJsonDocument<256> doc;
+	if (weight != -1)
+	{
+		doc["value"] = weight;
+	}
+	else
+	{
+		doc["value"] = nullptr;
+	}
+	String data;
+	serializeJson(doc, data);
+	publishData("weight", data);
 }
 
 bool hasLatitudeLongitude = false;
@@ -105,12 +119,7 @@ void updateGps()
 	{
 		if (!hasLatitudeLongitude || currentLatitude != latitude || currentLongitude != longitude)
 		{
-			StaticJsonDocument<256> doc;
-			doc["latitude"] = latitude;
-			doc["longitude"] = longitude;
-			String data;
-			serializeJson(doc, data);
-			publishData("global_position", data);
+			publishGps(latitude, longitude);
 			currentLatitude = latitude;
 			currentLongitude = longitude;
 		}
@@ -120,19 +129,52 @@ void updateGps()
 	{
 		if (hasLatitudeLongitude)
 		{
-			StaticJsonDocument<256> doc;
-			doc["latitude"] = nullptr;
-			doc["longitude"] = nullptr;
-			String data;
-			serializeJson(doc, data);
-			publishData("global_position", data);
+			publishGps();
 		}
 		hasLatitudeLongitude = false;
 	}
 }
 
+void getGps()
+{
+	float latitude, longitude;
+	if (readGps(latitude, longitude))
+	{
+		publishGps(latitude, longitude);
+	}
+	else
+	{
+		publishGps();
+	}
+}
+
+void publishGps(float latitude, float longitude)
+{
+	StaticJsonDocument<256> doc;
+	doc["latitude"] = latitude;
+	doc["longitude"] = longitude;
+	String data;
+	serializeJson(doc, data);
+	publishData("global_position", data);
+}
+
+void publishGps()
+{
+	StaticJsonDocument<256> doc;
+	doc["latitude"] = nullptr;
+	doc["longitude"] = nullptr;
+	String data;
+	serializeJson(doc, data);
+	publishData("global_position", data);
+}
+
 void receiveData(String topic, String data)
 {
+	if (topic == "weight/get")
+	{
+		getWeight();
+		return;
+	}
 	if (topic == "weight/calibration/clear")
 	{
 		clearCalibration();
@@ -151,6 +193,11 @@ void receiveData(String topic, String data)
 	if (topic == "weight/calibration/get")
 	{
 		getCalibration();
+		return;
+	}
+	if (topic == "global_position/get")
+	{
+		getGps();
 		return;
 	}
 }

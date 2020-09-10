@@ -19,6 +19,10 @@ the device ID.
 The device publishes the weight value. Payload is a JSON object:
 * `value`: current weight value.
 
+### cloud/scale/id/weight/get
+
+An application publishes this message to force the device to publish the weight value via `cloud/scale/id/weight` message.
+
 ### cloud/scale/id/weight/calibration
 
 The device publishes the weight calibration table. Payload is a JSON array of objects:
@@ -54,6 +58,10 @@ An application publishes this message to force the device to publish the weight 
 The device publishes the global position value. Payload is a JSON object:
 * `latitude`: latitude part of the current position; it varies from -90 to 90.
 * `longitude`: longitude part of the current position; it varies from -180 to 180.
+
+### cloud/scale/id/global_position/get
+
+An application publishes this message to force the device to publish the global position value via `cloud/scale/id/global_position` message.
 
 ## Connections
 
