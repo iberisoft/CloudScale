@@ -79,7 +79,14 @@ void updateWeight()
 	if (currentWeight != weight)
 	{
 		StaticJsonDocument<256> doc;
-		doc["value"] = weight;
+		if (weight != -1)
+		{
+			doc["value"] = weight;
+		}
+		else
+		{
+			doc["value"] = nullptr;
+		}
 		String data;
 		serializeJson(doc, data);
 		publishData("weight", data);
