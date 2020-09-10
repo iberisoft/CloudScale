@@ -19,9 +19,9 @@ namespace CloudScale.Shared
             }
         }
 
-        float m_Weight;
+        float? m_Weight;
 
-        public float Weight
+        public float? Weight
         {
             get => m_Weight;
             set
@@ -30,9 +30,12 @@ namespace CloudScale.Shared
                 {
                     m_Weight = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Weight)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasWeight)));
                 }
             }
         }
+
+        public bool HasWeight => Weight != null;
 
         GlobalPosition m_GlobalPosition;
 

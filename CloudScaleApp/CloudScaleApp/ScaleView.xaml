@@ -15,7 +15,7 @@
         <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
         <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
         <Label Grid.Row="1" Grid.Column="0" Text="Weight:" />
-        <Label Grid.Row="1" Grid.Column="1">
+        <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=HasWeight}">
             <Label.FormattedText>
                 <FormattedString>
                     <Span Text="{Binding Path=Weight}" />

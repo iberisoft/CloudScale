@@ -7,7 +7,7 @@ namespace CloudScale.Shared
         public static void WeightFromJson(this BaseScale scale, string text)
         {
             var obj = JObject.Parse(text);
-            scale.Weight = (float)obj["value"];
+            scale.Weight = (float?)obj["value"];
         }
 
         public static void GlobalPositionFromJson(this BaseScale scale, string text)
