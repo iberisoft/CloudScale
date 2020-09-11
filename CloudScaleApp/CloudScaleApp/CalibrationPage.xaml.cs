@@ -54,6 +54,9 @@ namespace CloudScaleApp
                 var obj = new JObject();
                 obj["value"] = value;
                 await NetClient.PublishAsync($"{RemoteScale.DeviceId}/weight/calibration/add", obj.ToString());
+
+                WeightEntry.Text = "";
+                WeightEntry.Focus();
             }
         }
 
