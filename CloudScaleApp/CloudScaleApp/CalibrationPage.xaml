@@ -37,9 +37,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Entry x:Name="WeightEntry" Grid.Row="0" Grid.Column="0" Keyboard="Numeric" />
-            <Button Grid.Row="0" Grid.Column="1" Text="Add" Clicked="AddPoint" />
-            <Button Grid.Row="0" Grid.Column="2" Text="Clear" Clicked="ClearPoints" />
+            <Entry x:Name="WeightEntry" Grid.Column="0" Keyboard="Numeric" />
+            <Button Grid.Column="1" Text="Add" Clicked="AddPoint" />
+            <Button Grid.Column="2" Text="Clear" Clicked="ClearPoints" />
         </Grid>
         <CollectionView x:Name="TableView">
             <CollectionView.ItemTemplate>

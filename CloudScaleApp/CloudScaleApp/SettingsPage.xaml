@@ -4,7 +4,6 @@
              x:Class="CloudScaleApp.SettingsPage"
              Style="{StaticResource PageStyle}">
     <StackLayout>
-        <Label Text="Server Host:" />
-        <Entry Text="{Binding Path=ServerHost}" />
+        <Entry x:Name="ServerHostEntry" Placeholder="Server Host" Text="{Binding Path=ServerHost}" />
     </StackLayout>
 </ContentPage>

@@ -8,5 +8,15 @@ namespace CloudScaleApp
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (ServerHostEntry.Text == "")
+            {
+                ServerHostEntry.Focus();
+            }
+        }
     }
 }
