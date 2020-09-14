@@ -6,13 +6,7 @@
              x:Name="Page" Title="Scales" Style="{StaticResource PageStyle}">
     <StackLayout>
         <Label Text="{Binding Source={x:Static local:Settings.Default}, Path=ServerHost}" FontAttributes="Bold" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}" />
-        <CarouselView x:Name="RemoteScalesView" IndicatorView="RemoteScalesIndicatorView">
-            <CarouselView.ItemTemplate>
-                <DataTemplate>
-                    <local:ScaleView />
-                </DataTemplate>
-            </CarouselView.ItemTemplate>
-        </CarouselView>
+        <CarouselView x:Name="RemoteScalesView" IndicatorView="RemoteScalesIndicatorView" ItemTemplate="{DataTemplate local:ScaleView}" />
         <IndicatorView x:Name="RemoteScalesIndicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="DarkGray" />
     </StackLayout>
 </local:NetClientPage>

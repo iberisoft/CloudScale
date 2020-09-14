@@ -45,6 +45,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}">
+                        <ImageButton Padding="1" Source="cancel.png" Clicked="RemovePoint" />
                         <Label VerticalOptions="Center" Text="{Binding Path=Resistance}" />
                         <Label VerticalOptions="Center" Text="&#x279c;" />
                         <Label VerticalOptions="Center">
@@ -56,7 +57,6 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <ImageButton Source="cancel.png" Clicked="RemovePoint" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
