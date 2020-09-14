@@ -49,3 +49,19 @@ void resetWiFi()
 	delay(1000);
 	wifiManager.reboot();
 }
+
+void scanWiFi()
+{
+  StaticJsonDocument<1024> doc;
+  int count = WiFi.scanNetworks();
+  for (int i = 0; i < count; ++i)
+  {
+    doc[i]["ssid"] = WiFi.SSID(i);
+    doc[i]["rssi"] = WiFi.RSSI(i);
+    delay(10);
+  }
+
+  String data;
+  serializeJson(doc, data);
+  publishData("wifi", data);
+}

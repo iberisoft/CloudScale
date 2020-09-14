@@ -39,6 +39,7 @@ void loop()
 		subscribeData("weight/get");
 		subscribeData("weight/calibration/+");
 		subscribeData("global_position/get");
+		subscribeData("wifi/scan");
 	case 2:
 		pollServer();
 		if (millis() - updateTime > deviceIdle)
@@ -208,6 +209,11 @@ void receiveData(String topic, String data)
 	if (topic == "global_position/get")
 	{
 		getGps();
+		return;
+	}
+	if (topic == "wifi/scan")
+	{
+		scanWiFi();
 		return;
 	}
 }
