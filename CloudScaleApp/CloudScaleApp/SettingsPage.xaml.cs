@@ -7,16 +7,8 @@ namespace CloudScaleApp
         public SettingsPage()
         {
             InitializeComponent();
-        }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            if (ServerHostEntry.Text == "")
-            {
-                ServerHostEntry.Focus();
-            }
+            BindingContext = Settings.Default;
         }
     }
 }

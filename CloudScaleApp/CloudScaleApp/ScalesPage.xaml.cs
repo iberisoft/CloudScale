@@ -1,6 +1,5 @@
 ﻿using CloudScale.Shared;
 using MqttHelper;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +7,9 @@ using Xamarin.Forms;
 
 namespace CloudScaleApp
 {
-    public partial class MainPage : NetClientPage
+    public partial class ScalesPage : NetClientPage
     {
-        public MainPage()
+        public ScalesPage()
         {
             InitializeComponent();
 
@@ -52,11 +51,6 @@ namespace CloudScaleApp
                     remoteScale?.GlobalPositionFromJson(payload);
                     break;
             }
-        }
-
-        private async void OpenSettings(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SettingsPage { BindingContext = Settings.Default });
         }
     }
 }

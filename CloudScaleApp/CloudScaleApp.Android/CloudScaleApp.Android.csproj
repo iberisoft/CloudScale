@@ -96,11 +96,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\cancel.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\cancel.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\cancel.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\cancel.png" />
-    <AndroidResource Include="Resources\drawable-xxxhdpi\cancel.png" />
+    <AndroidResource Include="Resources\drawable\settings.png" />
+    <AndroidResource Include="Resources\drawable\scales.png" />
+    <AndroidResource Include="Resources\drawable\cancel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

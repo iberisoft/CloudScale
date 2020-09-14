@@ -2,8 +2,8 @@
 <local:NetClientPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CloudScaleApp"
-             x:Class="CloudScaleApp.MainPage"
-             x:Name="Page" Style="{StaticResource PageStyle}">
+             x:Class="CloudScaleApp.ScalesPage"
+             x:Name="Page" Title="Scales" Style="{StaticResource PageStyle}">
     <StackLayout>
         <Label Text="{Binding Source={x:Static local:Settings.Default}, Path=ServerHost}" FontAttributes="Bold" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}" />
         <CarouselView x:Name="RemoteScalesView" IndicatorView="RemoteScalesIndicatorView">
@@ -14,6 +14,5 @@
             </CarouselView.ItemTemplate>
         </CarouselView>
         <IndicatorView x:Name="RemoteScalesIndicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="DarkGray" />
-        <Button Text="Settings" Clicked="OpenSettings" />
     </StackLayout>
 </local:NetClientPage>
