@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace CloudScaleApp
+namespace CloudScale
 {
     public partial class AppShell : Shell
     {

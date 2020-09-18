@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:NetClientPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:CloudScaleApp"
-             x:Class="CloudScaleApp.ScalesPage"
+             xmlns:local="clr-namespace:CloudScale"
+             x:Class="CloudScale.ScalesPage"
              x:Name="Page" Title="Scales" Style="{StaticResource PageStyle}">
     <StackLayout>
         <Label Text="{Binding Source={x:Static local:Settings.Default}, Path=ServerHost}" FontAttributes="Bold" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}" />

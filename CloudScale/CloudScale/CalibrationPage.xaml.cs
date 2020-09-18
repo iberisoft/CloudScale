@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace CloudScaleApp
+namespace CloudScale
 {
     public partial class CalibrationPage : NetClientPage
     {

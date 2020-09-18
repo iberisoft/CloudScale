@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace CloudScaleApp
+namespace CloudScale
 {
     public partial class ScaleView : ContentView
     {

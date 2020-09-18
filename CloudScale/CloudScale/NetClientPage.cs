@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace CloudScaleApp
+namespace CloudScale
 {
     public abstract class NetClientPage : ContentPage
     {

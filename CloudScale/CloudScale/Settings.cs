@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Xamarin.Essentials;
 
-namespace CloudScaleApp
+namespace CloudScale
 {
     class Settings : INotifyPropertyChanged
     {
