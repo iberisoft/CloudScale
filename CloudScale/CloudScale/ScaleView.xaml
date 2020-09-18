@@ -11,7 +11,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
             <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
