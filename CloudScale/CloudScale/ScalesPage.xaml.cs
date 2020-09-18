@@ -16,7 +16,7 @@ namespace CloudScale
             RemoteScalesView.ItemsSource = m_RemoteScales;
         }
 
-        readonly ObservableCollection<BaseScale> m_RemoteScales = new ObservableCollection<BaseScale>();
+        readonly ObservableCollection<RemoteScale> m_RemoteScales = new ObservableCollection<RemoteScale>();
 
         protected override async Task OpenHost()
         {
@@ -38,7 +38,7 @@ namespace CloudScale
                 case "heartbeat":
                     if (remoteScale == null)
                     {
-                        remoteScale = new BaseScale { DeviceId = deviceId };
+                        remoteScale = new RemoteScale { DeviceId = deviceId };
                         await Device.InvokeOnMainThreadAsync(() => m_RemoteScales.Add(remoteScale));
                         await NetClient.PublishAsync($"{remoteScale.DeviceId}/weight/get");
                         await NetClient.PublishAsync($"{remoteScale.DeviceId}/global_position/get");

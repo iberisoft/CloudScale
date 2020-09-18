@@ -16,7 +16,7 @@ namespace CloudScale
             InitializeComponent();
         }
 
-        private BaseScale RemoteScale => (BaseScale)BindingContext;
+        private RemoteScale RemoteScale => (RemoteScale)BindingContext;
 
         protected override async Task OpenHost()
         {

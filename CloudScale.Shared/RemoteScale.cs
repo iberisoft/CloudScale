@@ -2,7 +2,7 @@
 
 namespace CloudScale.Shared
 {
-    public class BaseScale : INotifyPropertyChanged
+    public class RemoteScale : INotifyPropertyChanged
     {
         string m_DeviceId;
 
