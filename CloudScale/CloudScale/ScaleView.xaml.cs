@@ -14,5 +14,10 @@ namespace CloudScale
         {
             await Navigation.PushAsync(new CalibrationPage { BindingContext = BindingContext });
         }
+
+        private async void OpenBeacons(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new BeaconsPage { BindingContext = BindingContext });
+        }
     }
 }

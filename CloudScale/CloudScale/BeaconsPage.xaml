@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:NetClientPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CloudScale"
+             x:Class="CloudScale.BeaconsPage"
+             x:Name="Page" Title="Beacons" Style="{StaticResource PageStyle}">
+    <StackLayout>
+        <Label Text="{Binding Source={x:Static local:Settings.Default}, Path=ServerHost}" FontAttributes="Bold" IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
+            <Label Grid.Row="1" Grid.Column="0" Text="GPS:" />
+            <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding Path=GlobalPosition.Latitude}" />
+                        <Span Text="&#176;" />
+                        <Span Text=" / " />
+                        <Span Text="{Binding Path=GlobalPosition.Longitude}" />
+                        <Span Text="&#176;" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+        <Label Text="Beacons" FontAttributes="Bold" />
+        <CollectionView x:Name="BeaconsView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <Frame Margin="0,0,0,10" BorderColor="Gray">
+                            <Grid IsEnabled="{Binding Source={x:Reference Page}, Path=IsHostConnected}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="ID:" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
+                                <Label Grid.Row="0" Grid.Column="2">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Path=SignalStrength}" />
+                                            <Span Text=" " />
+                                            <Span Text="dB" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Row="1" Grid.Column="0" Text="GPS:" />
+                                <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Path=GlobalPosition.Latitude}" />
+                                            <Span Text="&#176;" />
+                                            <Span Text=" / " />
+                                            <Span Text="{Binding Path=GlobalPosition.Longitude}" />
+                                            <Span Text="&#176;" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <ImageButton Grid.Row="1" Grid.Column="2" Padding="1" Source="location.png" Clicked="SetBeaconPosition" />
+                            </Grid>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</local:NetClientPage>

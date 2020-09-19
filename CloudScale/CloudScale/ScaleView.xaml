@@ -25,7 +25,8 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Grid.Row="2" Grid.Column="0" Text="GPS:" />
+            <Label Grid.Row="2" Grid.Column="0" Text="GPS:" IsVisible="{Binding Path=IsGlobalPositionFine}" />
+            <Label Grid.Row="2" Grid.Column="0" Text="LPS:" IsVisible="{Binding Path=IsGlobalPositionCoarse}" />
             <Label Grid.Row="2" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
                 <Label.FormattedText>
                     <FormattedString>
@@ -38,6 +39,16 @@
                 </Label.FormattedText>
             </Label>
         </Grid>
-        <Button Text="Calibration" Clicked="OpenCalibration" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Calibration" Clicked="OpenCalibration" />
+            <Button Grid.Column="1" Text="Beacons" Clicked="OpenBeacons" />
+        </Grid>
     </StackLayout>
 </ContentView>

@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace CloudScale.Shared
 {
-    public class RemoteScale : INotifyPropertyChanged
+    public class Beacon : INotifyPropertyChanged
     {
         string m_DeviceId;
 
@@ -19,23 +21,20 @@ namespace CloudScale.Shared
             }
         }
 
-        float? m_Weight;
+        int m_SignalStrength;
 
-        public float? Weight
+        public int SignalStrength
         {
-            get => m_Weight;
+            get => m_SignalStrength;
             set
             {
-                if (m_Weight != value)
+                if (m_SignalStrength != value)
                 {
-                    m_Weight = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Weight)));
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasWeight)));
+                    m_SignalStrength = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignalStrength)));
                 }
             }
         }
-
-        public bool HasWeight => Weight != null;
 
         GlobalPosition m_GlobalPosition;
 
@@ -55,24 +54,12 @@ namespace CloudScale.Shared
 
         public bool HasGlobalPosition => GlobalPosition != null;
 
-        bool m_IsGlobalPositionCoarse;
-
-        public bool IsGlobalPositionCoarse
-        {
-            get => m_IsGlobalPositionCoarse;
-            set
-            {
-                if (m_IsGlobalPositionCoarse != value)
-                {
-                    m_IsGlobalPositionCoarse = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsGlobalPositionCoarse)));
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsGlobalPositionFine)));
-                }
-            }
-        }
-
-        public bool IsGlobalPositionFine => !IsGlobalPositionCoarse;
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public static GlobalPosition ComputeGlobalPosition(IEnumerable<Beacon> beacons)
+        {
+            beacons = beacons.Where(beacon => beacon.HasGlobalPosition);
+            return beacons.OrderByDescending(beacon => beacon.SignalStrength).FirstOrDefault()?.GlobalPosition;
+        }
     }
 }

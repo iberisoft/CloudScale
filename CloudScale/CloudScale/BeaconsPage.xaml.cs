@@ -1,8 +1,8 @@
 ﻿using CloudScale.Shared;
 using MqttHelper;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,16 +10,14 @@ using Xamarin.Forms;
 
 namespace CloudScale
 {
-    public partial class ScalesPage : NetClientPage
+    public partial class BeaconsPage : NetClientPage
     {
-        public ScalesPage()
+        public BeaconsPage()
         {
             InitializeComponent();
-
-            RemoteScalesView.ItemsSource = m_RemoteScales;
         }
 
-        readonly ObservableCollection<RemoteScale> m_RemoteScales = new ObservableCollection<RemoteScale>();
+        private RemoteScale RemoteScale => (RemoteScale)BindingContext;
 
         protected override async Task OpenHost()
         {
@@ -27,10 +25,10 @@ namespace CloudScale
 
             if (NetClient != null)
             {
-                await NetClient.SubscribeAsync("scale/+/heartbeat");
-                await NetClient.SubscribeAsync("scale/+/weight");
-                await NetClient.SubscribeAsync("scale/+/global_position");
-                await NetClient.SubscribeAsync("scale/+/wifi");
+                await NetClient.SubscribeAsync($"scale/{RemoteScale.DeviceId}/heartbeat");
+                await NetClient.SubscribeAsync($"scale/{RemoteScale.DeviceId}/global_position");
+                await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/global_position/get");
+                await NetClient.SubscribeAsync($"scale/{RemoteScale.DeviceId}/wifi");
                 await NetClient.SubscribeAsync("beacon/+/global_position");
             }
         }
@@ -39,28 +37,14 @@ namespace CloudScale
         {
             if (deviceType == "scale")
             {
-                var remoteScale = m_RemoteScales.FirstOrDefault(scale => scale.DeviceId == deviceId);
                 switch (subTopic)
                 {
                     case "heartbeat":
-                        if (remoteScale == null)
-                        {
-                            remoteScale = new RemoteScale { DeviceId = deviceId };
-                            await Device.InvokeOnMainThreadAsync(() => m_RemoteScales.Add(remoteScale));
-                            await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/weight/get");
-                            await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/global_position/get");
-                        }
-                        await ProcessHeartbeat(remoteScale);
-                        break;
-                    case "weight":
-                        remoteScale?.WeightFromJson(payload);
+                        await ProcessHeartbeat();
                         break;
                     case "global_position":
-                        remoteScale?.GlobalPositionFromJson(payload);
-                        if (remoteScale != null)
-                        {
-                            remoteScale.IsGlobalPositionCoarse = false;
-                        }
+                        RemoteScale.GlobalPositionFromJson(payload);
+                        RemoteScale.IsGlobalPositionCoarse = false;
                         break;
                     case "wifi":
                         await UpdateBeacons(payload);
@@ -80,22 +64,12 @@ namespace CloudScale
 
         long m_WiFiScanTimestamp;
 
-        private async Task ProcessHeartbeat(RemoteScale remoteScale)
+        private async Task ProcessHeartbeat()
         {
             if (Stopwatch.GetTimestamp() - m_WiFiScanTimestamp > Stopwatch.Frequency * 5)
             {
-                await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/wifi/scan");
+                await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/wifi/scan");
                 m_WiFiScanTimestamp = Stopwatch.GetTimestamp();
-            }
-
-            if (!remoteScale.HasGlobalPosition || remoteScale.IsGlobalPositionCoarse)
-            {
-                var coarsePosition = Beacon.ComputeGlobalPosition(m_Beacons);
-                if (coarsePosition != null)
-                {
-                    remoteScale.GlobalPosition = coarsePosition;
-                    remoteScale.IsGlobalPositionCoarse = true;
-                }
             }
         }
 
@@ -117,6 +91,7 @@ namespace CloudScale
                 }
             }
             m_Beacons = beacons;
+            await Device.InvokeOnMainThreadAsync(() => BeaconsView.ItemsSource = m_Beacons.OrderByDescending(beacon2 => beacon2.SignalStrength));
         }
 
         private void UpdateBeaconPosition(string deviceId, string payload)
@@ -125,6 +100,23 @@ namespace CloudScale
             if (beacon != null)
             {
                 beacon.GlobalPosition = JsonExtension.GlobalPositionFromJson(payload);
+            }
+        }
+
+        private async void SetBeaconPosition(object sender, EventArgs e)
+        {
+            var beacon = (Beacon)((BindableObject)sender).BindingContext;
+
+            if (await this.Confirm("Beacons", "Set position?"))
+            {
+                if (RemoteScale.HasGlobalPosition)
+                {
+                    await NetClient.PublishAsync($"beacon/{beacon.DeviceId}/global_position/set", JsonExtension.GlobalPositionToJson(RemoteScale.GlobalPosition));
+                }
+                else
+                {
+                    await this.Inform("Beacons", "No GPS signal.");
+                }
             }
         }
     }
