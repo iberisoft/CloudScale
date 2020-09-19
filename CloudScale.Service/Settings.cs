@@ -10,6 +10,8 @@ namespace CloudScale.Service
     {
         public string ServerHost { get; set; }
 
+        public int ServerPort { get; set; }
+
         public Dictionary<string, GlobalPosition> BeaconPositions { get; set; } = new Dictionary<string, GlobalPosition>();
 
         public static Settings Default { get; } = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(FilePath));

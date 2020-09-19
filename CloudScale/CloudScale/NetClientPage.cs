@@ -33,7 +33,7 @@ namespace CloudScale
             NetClient = new NetClient("cloud");
             NetClient.IsConnectedChanged += NetClient_IsConnectedChanged;
             NetClient.MessageReceived += NetClient_MessageReceived;
-            await NetClient.StartAsync(Settings.Default.ServerHost);
+            await NetClient.StartAsync(Settings.Default.ServerHost, Settings.Default.ServerPort);
 
             NotifyHostConnected();
         }

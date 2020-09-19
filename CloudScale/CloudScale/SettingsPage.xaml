@@ -5,5 +5,6 @@
              Title="Settings" Style="{StaticResource PageStyle}">
     <StackLayout>
         <Entry Placeholder="Server Host" Text="{Binding Path=ServerHost}" />
+        <Entry Placeholder="Server Port" Text="{Binding Path=ServerPort}" MaxLength="5" Keyboard="Numeric" />
     </StackLayout>
 </ContentPage>

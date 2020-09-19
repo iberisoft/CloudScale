@@ -14,7 +14,7 @@ namespace CloudScale.Service
             using (m_NetClient = new NetClient("cloud/beacon"))
             {
                 m_NetClient.MessageReceived += NetClient_MessageReceived;
-                await m_NetClient.StartAsync(Settings.Default.ServerHost);
+                await m_NetClient.StartAsync(Settings.Default.ServerHost, Settings.Default.ServerPort);
 
                 await m_NetClient.SubscribeAsync("+/global_position/get");
                 await m_NetClient.SubscribeAsync("+/global_position/set");

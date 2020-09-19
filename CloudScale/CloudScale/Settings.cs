@@ -22,6 +22,19 @@ namespace CloudScale
             }
         }
 
+        public int ServerPort
+        {
+            get => Preferences.Get(nameof(ServerPort), 1883);
+            set
+            {
+                if (ServerPort != value)
+                {
+                    Preferences.Set(nameof(ServerPort), value);
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(ServerPort)));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
