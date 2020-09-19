@@ -6,5 +6,8 @@
         <Style x:Key="PageStyle" TargetType="Page">
             <Setter Property="Padding" Value="10" />
         </Style>
+        <Style TargetType="ImageButton">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
     </Application.Resources>
 </Application>
