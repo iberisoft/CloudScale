@@ -24,13 +24,13 @@ namespace CloudScale
 
             if (NetClient != null)
             {
-                await NetClient.SubscribeAsync("+/heartbeat");
-                await NetClient.SubscribeAsync("+/weight");
-                await NetClient.SubscribeAsync("+/global_position");
+                await NetClient.SubscribeAsync("scale/+/heartbeat");
+                await NetClient.SubscribeAsync("scale/+/weight");
+                await NetClient.SubscribeAsync("scale/+/global_position");
             }
         }
 
-        protected override async void MessageReceivedHandler(string deviceId, string subTopic, string payload)
+        protected override async void MessageReceivedHandler(string deviceType, string deviceId, string subTopic, string payload)
         {
             var remoteScale = m_RemoteScales.FirstOrDefault(scale => scale.DeviceId == deviceId);
             switch (subTopic)
@@ -40,8 +40,8 @@ namespace CloudScale
                     {
                         remoteScale = new RemoteScale { DeviceId = deviceId };
                         await Device.InvokeOnMainThreadAsync(() => m_RemoteScales.Add(remoteScale));
-                        await NetClient.PublishAsync($"{remoteScale.DeviceId}/weight/get");
-                        await NetClient.PublishAsync($"{remoteScale.DeviceId}/global_position/get");
+                        await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/weight/get");
+                        await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/global_position/get");
                     }
                     break;
                 case "weight":

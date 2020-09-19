@@ -30,7 +30,7 @@ namespace CloudScale
                 return;
             }
 
-            NetClient = new NetClient("cloud/scale");
+            NetClient = new NetClient("cloud");
             NetClient.IsConnectedChanged += NetClient_IsConnectedChanged;
             NetClient.MessageReceived += NetClient_MessageReceived;
             await NetClient.StartAsync(Settings.Default.ServerHost);
@@ -66,9 +66,10 @@ namespace CloudScale
         private void NetClient_MessageReceived(object sender, NetMessage e)
         {
             var i = e.Topic.IndexOf('/');
-            MessageReceivedHandler(e.Topic.Remove(i), e.Topic.Substring(i + 1), e.Payload);
+            var j = e.Topic.IndexOf('/', i + 1);
+            MessageReceivedHandler(e.Topic.Remove(i), e.Topic.Substring(i + 1, j - i - 1), e.Topic.Substring(j + 1), e.Payload);
         }
 
-        protected abstract void MessageReceivedHandler(string deviceId, string subTopic, string payload);
+        protected abstract void MessageReceivedHandler(string deviceType, string deviceId, string subTopic, string payload);
     }
 }
