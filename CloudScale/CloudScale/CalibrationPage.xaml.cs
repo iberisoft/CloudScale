@@ -62,7 +62,7 @@ namespace CloudScale
 
         private async void ClearPoints(object sender, EventArgs e)
         {
-            if (await DisplayAlert("Calibration", "Clear values?", "Yes", "No"))
+            if (await this.Confirm("Calibration", "Clear values?"))
             {
                 await NetClient.PublishAsync($"{RemoteScale.DeviceId}/weight/calibration/clear");
             }
@@ -70,7 +70,7 @@ namespace CloudScale
 
         private async void RemovePoint(object sender, EventArgs e)
         {
-            if (await DisplayAlert("Calibration", "Remove value?", "Yes", "No"))
+            if (await this.Confirm("Calibration", "Remove value?"))
             {
                 var point = (CalPoint)((BindableObject)sender).BindingContext;
                 var obj = new JObject();
