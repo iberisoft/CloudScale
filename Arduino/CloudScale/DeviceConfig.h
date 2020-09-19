@@ -9,6 +9,6 @@ const int gpsTxPin = D2;
 const int resistorPin = 34;
 #endif
 const int maxCalPoints = 30;
-const int gpsTimeout = 60000;
+const int gpsTimeout = 10000;
 
 const int deviceIdle = 1000;
