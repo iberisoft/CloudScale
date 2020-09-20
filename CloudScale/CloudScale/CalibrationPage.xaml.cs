@@ -59,6 +59,7 @@ namespace CloudScale
                 var obj = new JObject();
                 obj["value"] = value;
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/add", obj.ToString());
+                await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/get");
 
                 WeightEntry.Text = "";
                 WeightEntry.Focus();
@@ -70,6 +71,7 @@ namespace CloudScale
             if (await this.Confirm("Calibration", "Clear values?"))
             {
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/clear");
+                await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/get");
             }
         }
 
@@ -81,6 +83,7 @@ namespace CloudScale
                 var obj = new JObject();
                 obj["index"] = m_Table.IndexOf(point);
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/remove", obj.ToString());
+                await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/get");
             }
         }
 

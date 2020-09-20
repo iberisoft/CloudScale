@@ -39,7 +39,7 @@ namespace CloudScale.Service
                     await GetBeaconPosition(deviceId);
                     break;
                 case "global_position/set":
-                    await SetBeaconPosition(deviceId, payload);
+                    SetBeaconPosition(deviceId, payload);
                     break;
             }
         }
@@ -58,7 +58,7 @@ namespace CloudScale.Service
             }
         }
 
-        private static async Task SetBeaconPosition(string deviceId, string payload)
+        private static void SetBeaconPosition(string deviceId, string payload)
         {
             var position = JsonExtension.GlobalPositionFromJson(payload);
             lock (Settings.Default.BeaconPositions)
@@ -66,8 +66,6 @@ namespace CloudScale.Service
                 Settings.Default.BeaconPositions[deviceId] = position;
                 Settings.Default.Save();
             }
-
-            await m_NetClient.PublishAsync($"{deviceId}/global_position", JsonExtension.GlobalPositionToJson(position));
         }
     }
 }

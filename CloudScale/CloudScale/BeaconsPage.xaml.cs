@@ -112,6 +112,7 @@ namespace CloudScale
                 if (RemoteScale.HasGlobalPosition)
                 {
                     await NetClient.PublishAsync($"beacon/{beacon.DeviceId}/global_position/set", JsonExtension.GlobalPositionToJson(RemoteScale.GlobalPosition));
+                    await NetClient.PublishAsync($"beacon/{beacon.DeviceId}/global_position/get");
                 }
                 else
                 {

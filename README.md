@@ -42,21 +42,15 @@ The device publishes the weight calibration table. Payload is a JSON array of ob
 
 An application publishes this message to clear the weight calibration table.
 
-After receving it, the device will publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
-
 ### cloud/scale/id/weight/calibration/add
 
 An application publishes this message to add a point to the weight calibration table. Payload is a JSON object:
 * `value`: weight value corresponding to the new calibration point.
 
-After receving it, the device will publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
-
 ### cloud/scale/id/weight/calibration/remove
 
 An application publishes this message to remove a point from the weight calibration table. Payload is a JSON object:
 * `index`: index of the removing calibration point.
-
-After receving it, the device will publish the weight calibration table via `cloud/scale/id/weight/calibration` message.
 
 ### cloud/scale/id/weight/calibration/get
 
@@ -89,8 +83,6 @@ An application publishes this message to force the service to publish a beacon's
 An application publishes this message to set up a beacon's global position value. Payload is a JSON object:
 * `latitude`: latitude part of the current position; it varies from -90 to 90.
 * `longitude`: longitude part of the current position; it varies from -180 to 180.
-
-After receving it, the service will publish the beacon global position value via `cloud/beacon/id/global_position` message.
 
 ## Connections
 

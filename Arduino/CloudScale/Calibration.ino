@@ -45,7 +45,6 @@ void clearCalibration()
 	calPoints.clear();
 
 	saveSettings();
-	getCalibration();
 }
 
 void addCalibration(String data)
@@ -79,7 +78,6 @@ void addCalibration(String data)
 	}
 
 	saveSettings();
-	getCalibration();
 }
 
 void removeCalibration(String data)
@@ -95,7 +93,6 @@ void removeCalibration(String data)
 	calPoints.remove(index);
 
 	saveSettings();
-	getCalibration();
 }
 
 void getCalibration()
