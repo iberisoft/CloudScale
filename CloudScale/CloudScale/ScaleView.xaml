@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CloudScale"
              x:Class="CloudScale.ScaleView">
     <StackLayout>
         <Grid>
@@ -27,17 +28,7 @@
             </Label>
             <Label Grid.Row="2" Grid.Column="0" Text="GPS:" IsVisible="{Binding Path=IsGlobalPositionFine}" />
             <Label Grid.Row="2" Grid.Column="0" Text="LPS:" IsVisible="{Binding Path=IsGlobalPositionCoarse}" />
-            <Label Grid.Row="2" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding Path=GlobalPosition.Latitude}" />
-                        <Span Text="&#176;" />
-                        <Span Text=" / " />
-                        <Span Text="{Binding Path=GlobalPosition.Longitude}" />
-                        <Span Text="&#176;" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <local:GlobalPositionView Grid.Row="2" Grid.Column="1" GlobalPosition="{Binding Path=GlobalPosition}" IsVisible="{Binding Path=HasGlobalPosition}" />
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

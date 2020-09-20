@@ -18,17 +18,7 @@
             <Label Grid.Row="0" Grid.Column="0" Text="Device ID:" />
             <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=DeviceId}" />
             <Label Grid.Row="1" Grid.Column="0" Text="GPS:" />
-            <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding Path=GlobalPosition.Latitude}" />
-                        <Span Text="&#176;" />
-                        <Span Text=" / " />
-                        <Span Text="{Binding Path=GlobalPosition.Longitude}" />
-                        <Span Text="&#176;" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <local:GlobalPositionView Grid.Row="1" Grid.Column="1" GlobalPosition="{Binding Path=GlobalPosition}" IsVisible="{Binding Path=HasGlobalPosition}" />
         </Grid>
         <Label Text="Beacons" FontAttributes="Bold" />
         <CollectionView x:Name="BeaconsView">
@@ -58,17 +48,7 @@
                                     </Label.FormattedText>
                                 </Label>
                                 <Label Grid.Row="1" Grid.Column="0" Text="GPS:" />
-                                <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=HasGlobalPosition}">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding Path=GlobalPosition.Latitude}" />
-                                            <Span Text="&#176;" />
-                                            <Span Text=" / " />
-                                            <Span Text="{Binding Path=GlobalPosition.Longitude}" />
-                                            <Span Text="&#176;" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
+                                <local:GlobalPositionView Grid.Row="1" Grid.Column="1" GlobalPosition="{Binding Path=GlobalPosition}" IsVisible="{Binding Path=HasGlobalPosition}" />
                                 <ImageButton Grid.Row="1" Grid.Column="2" Padding="1" Source="location.png" Clicked="SetBeaconPosition" />
                             </Grid>
                         </Frame>

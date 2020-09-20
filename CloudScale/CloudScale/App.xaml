@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CloudScale"
              x:Class="CloudScale.App">
     <Application.Resources>
         <Style x:Key="PageStyle" TargetType="Page">
@@ -8,6 +9,25 @@
         </Style>
         <Style TargetType="ImageButton">
             <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+        <Style TargetType="local:GlobalPositionView">
+            <Setter Property="ControlTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Label BindingContext="{TemplateBinding GlobalPosition}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Path=Latitude}" />
+                                    <Span Text="&#176;" />
+                                    <Span Text=" / " />
+                                    <Span Text="{Binding Path=Longitude}" />
+                                    <Span Text="&#176;" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
