@@ -1,5 +1,6 @@
 ﻿using CloudScale.Shared;
 using MqttHelper;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 
@@ -11,10 +12,15 @@ namespace CloudScale.Service
 
         static async Task Main()
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
             using (m_NetClient = new NetClient("cloud/beacon"))
             {
                 m_NetClient.MessageReceived += NetClient_MessageReceived;
                 await m_NetClient.StartAsync(Settings.Default.ServerHost, Settings.Default.ServerPort);
+                Log.Information("Connecting to {Host}:{Port}", Settings.Default.ServerHost, Settings.Default.ServerPort);
 
                 await m_NetClient.SubscribeAsync("+/global_position/get");
                 await m_NetClient.SubscribeAsync("+/global_position/set");
@@ -65,6 +71,7 @@ namespace CloudScale.Service
             {
                 Settings.Default.BeaconPositions[deviceId] = position;
                 Settings.Default.Save();
+                Log.Information("Setting {DeviceId} position to {Latitude}\u00b0 / {Longitude}\u00b0", deviceId, position.Latitude, position.Longitude);
             }
         }
     }
