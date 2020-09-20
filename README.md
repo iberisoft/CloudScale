@@ -9,10 +9,13 @@ It is based on ESP device connecting to the sensors mentioned above.
 
 ![WEMOS D1 Mini](Images/Breadboard.jpg)
 
+The device can detect its location thru either onboard GPS or [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indication) values getting from
+the wireless beacons. The second option implies running `CloudScaleService`which keeps beacon global positions.
+
 ## MQTT Messages
 
 The device and its Android-based applications use the MQTT protocol for information exchange. The message topics start from `cloud/scale/id` where `id` is
-the device ID.
+the device ID. `CloudScaleService` and the Android-based applications exchange by messages with topics starting from `cloud/beacon/id` where `id` is the beacon SSID.
 
 ### cloud/scale/id/heartbeat
 
@@ -66,6 +69,24 @@ The device publishes the global position value. Payload is a JSON object:
 ### cloud/scale/id/global_position/get
 
 An application publishes this message to force the device to publish the global position value via `cloud/scale/id/global_position` message.
+
+### cloud/beacon/id/global_position
+
+The service publishes a beacon's global position value. Payload is a JSON object:
+* `latitude`: latitude part of the current position; it varies from -90 to 90.
+* `longitude`: longitude part of the current position; it varies from -180 to 180.
+
+### cloud/beacon/id/global_position/get
+
+An application publishes this message to force the service to publish a beacon's global position value via `cloud/beacon/id/global_position` message.
+
+### cloud/beacon/id/global_position/set
+
+An application publishes this message to set up a beacon's global position value. Payload is a JSON object:
+* `latitude`: latitude part of the current position; it varies from -90 to 90.
+* `longitude`: longitude part of the current position; it varies from -180 to 180.
+
+After receving it, the service will publish the beacon global position value via `cloud/beacon/id/global_position` message.
 
 ## Connections
 
