@@ -26,6 +26,8 @@ The device publishes this message periodically.
 The device publishes the weight value. Payload is a JSON object:
 * `value`: current weight value.
 
+The device publishes this message periodically when the value has changed.
+
 ### cloud/scale/id/weight/get
 
 An application publishes this message to force the device to publish the weight value via `cloud/scale/id/weight` message.
@@ -65,6 +67,8 @@ An application publishes this message to force the device to publish the weight 
 The device publishes the global position value. Payload is a JSON object:
 * `latitude`: latitude part of the current position; it varies from -90 to 90.
 * `longitude`: longitude part of the current position; it varies from -180 to 180.
+
+The device publishes this message periodically when the value has changed.
 
 ### cloud/scale/id/global_position/get
 
