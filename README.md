@@ -19,12 +19,13 @@ the device ID. `CloudScaleService` and the Android-based applications exchange b
 
 ### cloud/scale/id/heartbeat
 
-The device publishes this message periodically.
+The device publishes this message periodically. Payload is a JSON object:
+* `ms`: number of milliseconds passed since the board started up.
 
 ### cloud/scale/id/weight
 
 The device publishes the weight value. Payload is a JSON object:
-* `value`: current weight value.
+* `value`: current weight value. It can be `null` if not defined.
 
 The device publishes this message periodically when the value has changed.
 
@@ -59,8 +60,8 @@ An application publishes this message to force the device to publish the weight 
 ### cloud/scale/id/global_position
 
 The device publishes the global position value. Payload is a JSON object:
-* `latitude`: latitude part of the current position; it varies from -90 to 90.
-* `longitude`: longitude part of the current position; it varies from -180 to 180.
+* `latitude`: latitude part of the current position; it varies from -90 to 90. It can be `null` if not defined.
+* `longitude`: longitude part of the current position; it varies from -180 to 180. It can be `null` if not defined.
 
 The device publishes this message periodically when the value has changed.
 
@@ -71,8 +72,8 @@ An application publishes this message to force the device to publish the global 
 ### cloud/beacon/id/global_position
 
 The service publishes a beacon's global position value. Payload is a JSON object:
-* `latitude`: latitude part of the current position; it varies from -90 to 90.
-* `longitude`: longitude part of the current position; it varies from -180 to 180.
+* `latitude`: latitude part of the current position; it varies from -90 to 90. It can be `null` if not defined.
+* `longitude`: longitude part of the current position; it varies from -180 to 180. It can be `null` if not defined.
 
 ### cloud/beacon/id/global_position/get
 
