@@ -1,0 +1,25 @@
+name: .NET Framework
+
+on:
+  push:
+    paths-ignore:
+      - 'Arduino/**'
+      - 'Images/**'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: snickerbockers/submodules-init@v4
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Restore packages
+      run: nuget restore CloudScale.sln
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Build with MSBuild
+      run: msbuild CloudScale.sln -p:Configuration=Release
