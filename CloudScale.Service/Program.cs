@@ -68,6 +68,10 @@ namespace CloudScale.Service
         private static void SetBeaconPosition(string deviceId, string payload)
         {
             var position = JsonExtension.GlobalPositionFromJson(payload);
+            if (position == null)
+            {
+                return;
+            }
             lock (Settings.Default.BeaconPositions)
             {
                 Settings.Default.BeaconPositions[deviceId] = position;
