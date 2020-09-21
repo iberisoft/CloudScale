@@ -1,5 +1,7 @@
 # Cloud Scale
 
+![.NET Framework](https://github.com/iberisoft/CloudScale/workflows/.NET%20Framework/badge.svg)
+
 This prototype project integrates for IoT:
 
 * 1 kOhm pontentiometer
