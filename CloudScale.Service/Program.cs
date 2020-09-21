@@ -24,6 +24,7 @@ namespace CloudScale.Service
 
                 await m_NetClient.SubscribeAsync("+/global_position/get");
                 await m_NetClient.SubscribeAsync("+/global_position/set");
+                await m_NetClient.SubscribeAsync("+/global_position/clear");
 
                 Console.ReadLine();
 
@@ -47,6 +48,9 @@ namespace CloudScale.Service
                 case "global_position/set":
                     SetBeaconPosition(deviceId, payload);
                     break;
+                case "global_position/clear":
+                    ClearBeaconPosition(deviceId);
+                    break;
             }
         }
 
@@ -58,10 +62,7 @@ namespace CloudScale.Service
                 Settings.Default.BeaconPositions.TryGetValue(deviceId, out position);
             }
 
-            if (position != null)
-            {
-                await m_NetClient.PublishAsync($"{deviceId}/global_position", JsonExtension.GlobalPositionToJson(position));
-            }
+            await m_NetClient.PublishAsync($"{deviceId}/global_position", JsonExtension.GlobalPositionToJson(position));
         }
 
         private static void SetBeaconPosition(string deviceId, string payload)
@@ -72,6 +73,16 @@ namespace CloudScale.Service
                 Settings.Default.BeaconPositions[deviceId] = position;
                 Settings.Default.Save();
                 Log.Information("Setting {DeviceId} position to {Latitude}\u00b0 / {Longitude}\u00b0", deviceId, position.Latitude, position.Longitude);
+            }
+        }
+
+        private static void ClearBeaconPosition(string deviceId)
+        {
+            lock (Settings.Default.BeaconPositions)
+            {
+                Settings.Default.BeaconPositions.Remove(deviceId);
+                Settings.Default.Save();
+                Log.Information("Clearing {DeviceId} position", deviceId);
             }
         }
     }

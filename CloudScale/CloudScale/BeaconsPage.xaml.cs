@@ -120,5 +120,20 @@ namespace CloudScale
                 }
             }
         }
+
+        private async void ClearBeaconPosition(object sender, EventArgs e)
+        {
+            var beacon = (Beacon)((BindableObject)sender).BindingContext;
+            if (!beacon.HasGlobalPosition)
+            {
+                return;
+            }
+
+            if (await this.Confirm("Beacons", "Clear position?"))
+            {
+                await NetClient.PublishAsync($"beacon/{beacon.DeviceId}/global_position/clear");
+                await NetClient.PublishAsync($"beacon/{beacon.DeviceId}/global_position/get");
+            }
+        }
     }
 }

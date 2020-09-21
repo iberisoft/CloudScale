@@ -84,6 +84,10 @@ An application publishes this message to set up a beacon's global position value
 * `latitude`: latitude part of the current position; it varies from -90 to 90.
 * `longitude`: longitude part of the current position; it varies from -180 to 180.
 
+### cloud/beacon/id/global_position/clear
+
+An application publishes this message to clear a beacon's global position value.
+
 ## Connections
 
 ### WEMOS D1 Mini
