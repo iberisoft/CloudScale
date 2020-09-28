@@ -2,6 +2,7 @@
 using MqttHelper;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CloudScale.Service
@@ -15,6 +16,12 @@ namespace CloudScale.Service
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .CreateLogger();
+
+            foreach (var deviceId in Settings.Default.BeaconPositions.Keys.OrderBy(deviceId => deviceId))
+            {
+                var position = Settings.Default.BeaconPositions[deviceId];
+                Log.Information("{DeviceId} position is {Latitude}\u00b0 / {Longitude}\u00b0", deviceId, position.Latitude, position.Longitude);
+            }
 
             using (m_NetClient = new NetClient("cloud/beacon"))
             {
