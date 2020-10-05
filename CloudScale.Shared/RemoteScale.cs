@@ -73,6 +73,8 @@ namespace CloudScale.Shared
 
         public bool IsGlobalPositionFine => !IsGlobalPositionCoarse;
 
+        public long AliveTimestamp { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

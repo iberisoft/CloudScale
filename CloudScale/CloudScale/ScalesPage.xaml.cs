@@ -1,11 +1,13 @@
 ﻿using CloudScale.Shared;
 using MqttHelper;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace CloudScale
 {
@@ -31,6 +33,12 @@ namespace CloudScale
                 await NetClient.SubscribeAsync("scale/+/global_position");
                 await NetClient.SubscribeAsync("scale/+/wifi");
                 await NetClient.SubscribeAsync("beacon/+/global_position");
+
+                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                {
+                    RemoveDeadRemoteScales();
+                    return NetClient != null;
+                });
             }
         }
 
@@ -81,10 +89,12 @@ namespace CloudScale
 
         private async Task ProcessHeartbeat(RemoteScale remoteScale)
         {
-            if (Stopwatch.GetTimestamp() - m_WiFiScanTimestamp > Stopwatch.Frequency * 5)
+            remoteScale.AliveTimestamp = Stopwatch.GetTimestamp();
+
+            if (remoteScale.AliveTimestamp - m_WiFiScanTimestamp > Stopwatch.Frequency * 5)
             {
                 await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/wifi/scan");
-                m_WiFiScanTimestamp = Stopwatch.GetTimestamp();
+                m_WiFiScanTimestamp = remoteScale.AliveTimestamp;
             }
 
             if (!remoteScale.HasGlobalPosition || remoteScale.IsGlobalPositionCoarse)
@@ -95,6 +105,15 @@ namespace CloudScale
                     remoteScale.GlobalPosition = coarsePosition;
                     remoteScale.IsGlobalPositionCoarse = true;
                 }
+            }
+        }
+
+        private void RemoveDeadRemoteScales()
+        {
+            var timestamp = Stopwatch.GetTimestamp();
+            foreach (var remoteScale in m_RemoteScales.Where(remoteScale => timestamp - remoteScale.AliveTimestamp > Stopwatch.Frequency * 10).ToList())
+            {
+                m_RemoteScales.Remove(remoteScale);
             }
         }
 
