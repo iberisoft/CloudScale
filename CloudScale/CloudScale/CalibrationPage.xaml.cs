@@ -31,7 +31,7 @@ namespace CloudScale
             }
         }
 
-        protected override async void MessageReceivedHandler(string deviceType, string deviceId, string subTopic, string payload)
+        protected override void MessageReceivedHandler(string deviceType, string deviceId, string subTopic, string payload)
         {
             switch (subTopic)
             {
@@ -39,17 +39,17 @@ namespace CloudScale
                     RemoteScale.WeightFromJson(payload);
                     break;
                 case "weight/calibration":
-                    await UpdateTable(payload);
+                    UpdateTable(payload);
                     break;
             }
         }
 
         List<CalPoint> m_Table;
 
-        private async Task UpdateTable(string payload)
+        private void UpdateTable(string payload)
         {
             m_Table = JArray.Parse(payload).Select(token => new CalPoint { Resistance = (int)token["r"], Weight = (float)token["w"] }).ToList();
-            await Device.InvokeOnMainThreadAsync(() => TableView.ItemsSource = m_Table);
+            TableView.ItemsSource = m_Table;
         }
 
         private async void AddPoint(object sender, EventArgs e)

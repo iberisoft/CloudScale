@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace CloudScale
 {
@@ -46,7 +45,7 @@ namespace CloudScale
                         if (remoteScale == null)
                         {
                             remoteScale = new RemoteScale { DeviceId = deviceId };
-                            await Device.InvokeOnMainThreadAsync(() => m_RemoteScales.Add(remoteScale));
+                            m_RemoteScales.Add(remoteScale);
                             await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/weight/get");
                             await NetClient.PublishAsync($"scale/{remoteScale.DeviceId}/global_position/get");
                         }

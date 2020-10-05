@@ -91,7 +91,7 @@ namespace CloudScale
                 }
             }
             m_Beacons = beacons;
-            await Device.InvokeOnMainThreadAsync(() => BeaconsView.ItemsSource = m_Beacons.OrderByDescending(beacon2 => beacon2.SignalStrength));
+            BeaconsView.ItemsSource = m_Beacons.OrderByDescending(beacon2 => beacon2.SignalStrength);
         }
 
         private void UpdateBeaconPosition(string deviceId, string payload)
