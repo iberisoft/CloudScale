@@ -25,9 +25,11 @@ namespace CloudScale.Shared
 
         public static string GlobalPositionToJson(GlobalPosition position)
         {
-            var obj = new JObject();
-            obj["latitude"] = position?.Latitude;
-            obj["longitude"] = position?.Longitude;
+            var obj = new JObject
+            {
+                ["latitude"] = position?.Latitude,
+                ["longitude"] = position?.Longitude
+            };
             return obj.ToString();
         }
     }

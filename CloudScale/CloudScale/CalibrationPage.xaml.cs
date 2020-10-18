@@ -56,8 +56,10 @@ namespace CloudScale
         {
             if (float.TryParse(WeightEntry.Text, out float value))
             {
-                var obj = new JObject();
-                obj["value"] = value;
+                var obj = new JObject
+                {
+                    ["value"] = value
+                };
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/add", obj.ToString());
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/get");
 
@@ -80,8 +82,10 @@ namespace CloudScale
             if (await this.Confirm("Calibration", "Remove value?"))
             {
                 var point = (CalPoint)((BindableObject)sender).BindingContext;
-                var obj = new JObject();
-                obj["index"] = m_Table.IndexOf(point);
+                var obj = new JObject
+                {
+                    ["index"] = m_Table.IndexOf(point)
+                };
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/remove", obj.ToString());
                 await NetClient.PublishAsync($"scale/{RemoteScale.DeviceId}/weight/calibration/get");
             }
