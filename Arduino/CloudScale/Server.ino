@@ -39,7 +39,7 @@ void pollServer()
 	client.loop();
 }
 
-void _serverCallback(char* topic, uint8_t* data, unsigned int length)
+void _serverCallback(char* topic, uint8_t* data, uint32_t length)
 {
 	String topic2 = topic;
 	topic2 = topic2.substring(deviceTopic.length() + 1);

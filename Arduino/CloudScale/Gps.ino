@@ -10,7 +10,7 @@ void setupGps()
 TinyGPS gps;
 float latitude = -100;
 float longitude = -200;
-unsigned long gpsTime = 0;
+uint32_t gpsTime = 0;
 
 void pollGps()
 {
@@ -24,7 +24,7 @@ void pollGps()
 		}
 	}
 
-	unsigned long age = millis() - gpsTime;
+	uint32_t age = millis() - gpsTime;
 	if (age > gpsTimeout || age < 0)
 	{
 		latitude = -100;

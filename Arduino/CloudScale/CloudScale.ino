@@ -27,7 +27,7 @@ void setup()
 	setupServer(receiveData);
 }
 
-unsigned long updateTime = 0;
+uint32_t updateTime = 0;
 
 void loop()
 {
