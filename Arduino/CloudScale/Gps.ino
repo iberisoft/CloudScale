@@ -24,12 +24,10 @@ void pollGps()
 		}
 	}
 
-	uint32_t age = millis() - gpsTime;
-	if (age > gpsTimeout || age < 0)
+	if (millis() - gpsTime > gpsTimeout)
 	{
 		latitude = -100;
 		longitude = -200;
-		gpsTime = millis();
 	}
 }
 
